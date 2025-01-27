@@ -1,0 +1,92 @@
+/* 1. CheckComboBox overall style */
+#cmbCheckComboBox {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-border-color: #03045E; /* Deep blue border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px; /* Rounded corners */
+    -fx-text-fill: black; /* Black text color */
+}
+
+/* 2. Arrow button style */
+#cmbCheckComboBox .arrow-button {
+    -fx-background-color: transparent; /* Transparent background for arrow button */
+}
+
+/* 3. Arrow icon style */
+#cmbCheckComboBox .arrow {
+    -fx-background-color: black; /* Transparent background for arrow icon */
+    -fx-text-fill: black; /* Blue color for arrow icon */
+}
+
+/* 4. Text area style */
+#cmbCheckComboBox .text {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    /*-fx-padding: 5px;  */
+}
+
+/* 5. List-view style */
+#cmbCheckComboBox .list-view {
+    -fx-background-color: transparent; /* White background for list view */
+    -fx-border-radius: 1px; /* Rounded corners for list */
+    /*-fx-font-size: 14px; !* Font size for items *!*/
+}
+
+/* 6. List cells in ComboBox popup */
+#cmbCheckComboBox .list-view .list-cell {
+    -fx-background-color: white; /* White background for list cells */
+    -fx-text-fill: #03045E; /* Blue text color for list cells */
+    /*-fx-padding: 10px; !* Padding for list cells *!*/
+}
+
+/* 7. Selected list cell style */
+#cmbCheckComboBox .list-view .list-cell:selected {
+    /*-fx-background-color: #03045E; !* Deep blue background for selected item *!*/
+    -fx-text-fill: white; /* White text color for selected list item */
+}
+
+/* 8. Hovered list cell style */
+#cmbCheckComboBox .list-view .list-cell:hover {
+    -fx-background-color: #f1f1f1; /* Light grey background on hover */
+    -fx-text-fill: #03045E; /* Blue text color on hover */
+}
+
+/* 9. Checkbox style inside each list cell */
+#cmbCheckComboBox .list-view .list-cell .check-box {
+    -fx-background-color: transparent; /* Transparent background for checkbox */
+    -fx-border-color: #03045E; /* Blue border for checkbox */
+    -fx-border-width: 1px; /* Border width for checkbox */
+    /*-fx-padding: 10px;*/
+    -fx-alignment: center-left; /* Align checkbox to the left */
+
+}
+
+/* 10. Hover effect for checkbox */
+#cmbCheckComboBox .list-view .list-cell .check-box:hover {
+    -fx-background-color: transparent; /* Light grey background when hovered */
+    -fx-border-color: #03045E; /* Blue border on hover */
+}
+
+/* 11. Selected Checkbox style */
+#cmbCheckComboBox .list-view .list-cell .check-box:selected {
+    -fx-background-color: transparent; /* Blue background when selected */
+    -fx-border-color: #03045E; /* Remove border for selected checkbox */
+    -fx-text-fill: white; /* White checkmark color */
+}
+
+/* 12. Checkbox mark color when selected */
+#cmbCheckComboBox .list-view .list-cell .check-box .check-mark {
+    -fx-background-color: transparent; /* Transparent background for the check mark */
+    -fx-color: white; /* White color for the check mark */
+    -fx-border-color: transparent; /* No border around the mark */
+}
+
+/* 13. ComboBox popup scrollbar styles */
+#cmbCheckComboBox .scroll-bar {
+    -fx-background-color: transparent; /* Transparent background for scrollbar */
+}
+
+#cmbCheckComboBox .scroll-bar .thumb {
+    -fx-background-color: #03045E; /* Blue color for scrollbar thumb */
+    -fx-background-radius: 5px; /* Rounded corners for scrollbar thumb */
+}

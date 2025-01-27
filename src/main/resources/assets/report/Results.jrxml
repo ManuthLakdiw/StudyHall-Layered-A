@@ -1,0 +1,276 @@
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 7.0.0-b478feaa9aab4375eba71de77b4ca138ad2f62aa  -->
+<jasperReport name="Results" language="java" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d4a1d5eb-82dd-412f-a620-202e4bdf9dba">
+	<property name="template.engine" value="tabular_template"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="studyHallDBConnection"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Transparent" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Transparent" forecolor="#B89F7D" backcolor="#70A9C6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Transparent" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<dataset name="tableDataset" uuid="4c47d74f-a084-4152-82f0-677b01b9eac3">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="studyHallDBConnection"/>
+		<query language="SQL"><![CDATA[SELECT r.result_id,r.grade , e.subject_id, r.exam_id, r.student_id, r.marks, r.exam_grade, r.status FROM result r LEFT JOIN exam e ON r.exam_id = e.exam_id;]]></query>
+		<field name="result_id" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="result_id"/>
+			<property name="com.jaspersoft.studio.field.label" value="result_id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="result"/>
+		</field>
+		<field name="grade" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="grade"/>
+			<property name="com.jaspersoft.studio.field.label" value="grade"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="result"/>
+		</field>
+		<field name="subject_id" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="subject_id"/>
+			<property name="com.jaspersoft.studio.field.label" value="subject_id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="exam"/>
+		</field>
+		<field name="exam_id" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="exam_id"/>
+			<property name="com.jaspersoft.studio.field.label" value="exam_id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="result"/>
+		</field>
+		<field name="student_id" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="student_id"/>
+			<property name="com.jaspersoft.studio.field.label" value="student_id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="result"/>
+		</field>
+		<field name="marks" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="marks"/>
+			<property name="com.jaspersoft.studio.field.label" value="marks"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="result"/>
+		</field>
+		<field name="exam_grade" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="exam_grade"/>
+			<property name="com.jaspersoft.studio.field.label" value="exam_grade"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="result"/>
+		</field>
+		<field name="status" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="status"/>
+			<property name="com.jaspersoft.studio.field.label" value="status"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="result"/>
+		</field>
+	</dataset>
+	<parameter name="P_Date" class="java.lang.String"/>
+	<query language="sql"><![CDATA[SELECT r.result_id,r.grade , e.subject_id, r.exam_id, r.student_id, r.marks, r.exam_grade, r.status FROM result r LEFT JOIN exam e ON r.exam_id = e.exam_id]]></query>
+	<title height="72">
+		<element kind="frame" uuid="6321f5e3-86eb-444f-acc1-8daaaa0d6c60" mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699">
+			<element kind="staticText" uuid="9e48917a-7b59-4ffd-baad-725f45563194" x="20" y="20" width="234" height="43" forecolor="#FFFFFF" fontSize="34.0" bold="true">
+				<text><![CDATA[Result Sheet]]></text>
+			</element>
+			<element kind="staticText" uuid="0a399baa-bad3-4b1a-9fe3-bb1c563e6a27" x="395" y="43" width="180" height="20" forecolor="#FFFFFF" fontSize="14.0" bold="false" hTextAlign="Right">
+				<text><![CDATA[All Students]]></text>
+			</element>
+			<element kind="textField" uuid="57458ee7-07cc-4fd0-b72d-ad894867f3c5" x="360" y="60" width="100" height="30">
+				<expression><![CDATA[$P{P_Date}]]></expression>
+			</element>
+		</element>
+	</title>
+	<pageHeader height="13"/>
+	<pageFooter height="17"/>
+	<summary height="200" splitType="Stretch">
+		<element kind="component" uuid="2d7022be-eebf-43ca-ab7b-dfb90fe7c5aa" x="0" y="0" width="555" height="200">
+			<component kind="table">
+				<datasetRun uuid="08c66213-fbb7-4bf2-8e9d-9acfe9be6607" subDataset="tableDataset">
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				</datasetRun>
+				<column kind="single" uuid="29526f5d-12ac-493b-a774-78b1827b7f29" width="69">
+					<tableHeader height="30" style="Table_TH">
+						<element kind="textField" uuid="320b1110-ce2b-40f8-b165-2209c8fefa88" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="19.0" bold="true">
+							<expression><![CDATA["Header"]]></expression>
+						</element>
+					</tableHeader>
+					<tableFooter height="30" style="Table_TH"/>
+					<columnHeader height="30" style="Table_CH">
+						<element kind="staticText" uuid="db09461c-7089-4eb6-aa07-9e2d351b9f20" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="14.0" bold="true" hTextAlign="Center">
+							<text><![CDATA[result_id]]></text>
+						</element>
+					</columnHeader>
+					<columnFooter height="30" style="Table_CH"/>
+					<detailCell height="30" style="Table_TD">
+						<element kind="textField" uuid="22085581-b1e3-43f3-bc75-b8bb76298e05" key="" x="0" y="0" width="69" height="30" fontName="Arial" fontSize="14.0">
+							<expression><![CDATA[$F{result_id}]]></expression>
+							<box leftPadding="2"/>
+						</element>
+					</detailCell>
+				</column>
+				<column kind="single" uuid="d88b5195-093f-4ed6-bd53-42b3e64d5fde" width="69">
+					<tableHeader height="30" style="Table_TH">
+						<element kind="textField" uuid="68cbaa3e-1479-43d5-9b73-755bfd33e75f" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="19.0" bold="true">
+							<expression><![CDATA["Header"]]></expression>
+						</element>
+					</tableHeader>
+					<tableFooter height="30" style="Table_TH"/>
+					<columnHeader height="30" style="Table_CH">
+						<element kind="staticText" uuid="309d5a2d-12b6-4b66-853e-e44e5ccba539" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="14.0" bold="true" hTextAlign="Center">
+							<text><![CDATA[grade]]></text>
+						</element>
+					</columnHeader>
+					<columnFooter height="30" style="Table_CH"/>
+					<detailCell height="30" style="Table_TD">
+						<element kind="textField" uuid="c344b396-7e83-4bd4-acd0-898f919e0147" key="" x="0" y="0" width="69" height="30" fontName="Arial" fontSize="14.0">
+							<expression><![CDATA[$F{grade}]]></expression>
+							<box leftPadding="2"/>
+						</element>
+					</detailCell>
+				</column>
+				<column kind="single" uuid="0864a5d0-c1f8-40d2-a185-5fdf36a1e974" width="69">
+					<tableHeader height="30" style="Table_TH">
+						<element kind="textField" uuid="64438a48-4ea4-4485-98b9-7a413d50d88f" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="19.0" bold="true">
+							<expression><![CDATA["Header"]]></expression>
+						</element>
+					</tableHeader>
+					<tableFooter height="30" style="Table_TH"/>
+					<columnHeader height="30" style="Table_CH">
+						<element kind="staticText" uuid="5ab5706b-e79d-415c-b10b-855b9d69a6d3" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="14.0" bold="true" hTextAlign="Center">
+							<text><![CDATA[subject_id]]></text>
+						</element>
+					</columnHeader>
+					<columnFooter height="30" style="Table_CH"/>
+					<detailCell height="30" style="Table_TD">
+						<element kind="textField" uuid="405d4a57-788f-418d-b4b1-8ac9050a3913" key="" x="0" y="0" width="69" height="30" fontName="Arial" fontSize="14.0">
+							<expression><![CDATA[$F{subject_id}]]></expression>
+							<box leftPadding="2"/>
+						</element>
+					</detailCell>
+				</column>
+				<column kind="single" uuid="86f33efc-480a-4677-92fe-62dbe31f09ac" width="69">
+					<tableHeader height="30" style="Table_TH">
+						<element kind="textField" uuid="ce6b930e-3c76-4d77-8a8b-dbbabe3dcc2f" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="19.0" bold="true">
+							<expression><![CDATA["Header"]]></expression>
+						</element>
+					</tableHeader>
+					<tableFooter height="30" style="Table_TH"/>
+					<columnHeader height="30" style="Table_CH">
+						<element kind="staticText" uuid="bb0cd31c-3946-4623-bf0f-95bd0c5fbae9" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="14.0" bold="true" hTextAlign="Center">
+							<text><![CDATA[exam_id]]></text>
+						</element>
+					</columnHeader>
+					<columnFooter height="30" style="Table_CH"/>
+					<detailCell height="30" style="Table_TD">
+						<element kind="textField" uuid="6cf21719-f4b0-417a-8ded-431028eba6ed" key="" x="0" y="0" width="69" height="30" fontName="Arial" fontSize="14.0">
+							<expression><![CDATA[$F{exam_id}]]></expression>
+							<box leftPadding="2"/>
+						</element>
+					</detailCell>
+				</column>
+				<column kind="single" uuid="c6b6a7f2-9544-4264-bca2-032739db81a7" width="69">
+					<tableHeader height="30" style="Table_TH">
+						<element kind="textField" uuid="18ec27fa-1f27-465d-830b-d0afae50be3a" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="19.0" bold="true">
+							<expression><![CDATA["Header"]]></expression>
+						</element>
+					</tableHeader>
+					<tableFooter height="30" style="Table_TH"/>
+					<columnHeader height="30" style="Table_CH">
+						<element kind="staticText" uuid="b1e76606-3ae2-44f1-b641-e156c014b69d" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="14.0" bold="true" hTextAlign="Center">
+							<text><![CDATA[student_id]]></text>
+						</element>
+					</columnHeader>
+					<columnFooter height="30" style="Table_CH"/>
+					<detailCell height="30" style="Table_TD">
+						<element kind="textField" uuid="1ad0a57a-cfd4-4cde-80ad-6a48d73b7519" key="" x="0" y="0" width="69" height="30" fontName="Arial" fontSize="14.0">
+							<expression><![CDATA[$F{student_id}]]></expression>
+							<box leftPadding="2"/>
+						</element>
+					</detailCell>
+				</column>
+				<column kind="single" uuid="016b0ced-c033-4348-9f83-02db38be2283" width="69">
+					<tableHeader height="30" style="Table_TH">
+						<element kind="textField" uuid="97a21ba2-bb4e-4bf4-8c6c-f14794e6d93b" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="19.0" bold="true">
+							<expression><![CDATA["Header"]]></expression>
+						</element>
+					</tableHeader>
+					<tableFooter height="30" style="Table_TH"/>
+					<columnHeader height="30" style="Table_CH">
+						<element kind="staticText" uuid="ce0ee1c1-6172-4b48-a3ba-c0450b48ef17" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="14.0" bold="true" hTextAlign="Center">
+							<text><![CDATA[marks]]></text>
+						</element>
+					</columnHeader>
+					<columnFooter height="30" style="Table_CH"/>
+					<detailCell height="30" style="Table_TD">
+						<element kind="textField" uuid="f831ef83-402f-4c4c-bb47-fbaefb7a786a" key="" x="0" y="0" width="69" height="30" fontName="Arial" fontSize="14.0">
+							<expression><![CDATA[$F{marks}]]></expression>
+							<box leftPadding="2"/>
+						</element>
+					</detailCell>
+				</column>
+				<column kind="single" uuid="36784771-8ebb-4699-ad1b-00929f03caa8" width="69">
+					<tableHeader height="30" style="Table_TH">
+						<element kind="textField" uuid="0ca91bc8-109a-41ca-9507-f109cff709fe" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="19.0" bold="true">
+							<expression><![CDATA["Header"]]></expression>
+						</element>
+					</tableHeader>
+					<tableFooter height="30" style="Table_TH"/>
+					<columnHeader height="30" style="Table_CH">
+						<element kind="staticText" uuid="70c11f86-ebb2-471e-b648-b95d20289b46" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="14.0" bold="true" hTextAlign="Center">
+							<text><![CDATA[exam_grade]]></text>
+						</element>
+					</columnHeader>
+					<columnFooter height="30" style="Table_CH"/>
+					<detailCell height="30" style="Table_TD">
+						<element kind="textField" uuid="e4300cd2-eb26-4daf-bb5a-0525c67e9435" key="" x="0" y="0" width="69" height="30" fontName="Arial" fontSize="14.0">
+							<expression><![CDATA[$F{exam_grade}]]></expression>
+							<box leftPadding="2"/>
+						</element>
+					</detailCell>
+				</column>
+				<column kind="single" uuid="113fcc80-1856-412d-bf60-c558f46fe017" width="69">
+					<tableHeader height="30" style="Table_TH">
+						<element kind="textField" uuid="2070975c-bee4-41c4-b642-c61c07da0843" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="19.0" bold="true">
+							<expression><![CDATA["Header"]]></expression>
+						</element>
+					</tableHeader>
+					<tableFooter height="30" style="Table_TH"/>
+					<columnHeader height="30" style="Table_CH">
+						<element kind="staticText" uuid="cb35a197-a2f7-423d-8d57-cd0d340eb477" mode="Transparent" x="0" y="0" width="69" height="30" forecolor="#006699" backcolor="#E6E6E6" fontSize="14.0" bold="true" hTextAlign="Center">
+							<text><![CDATA[status]]></text>
+						</element>
+					</columnHeader>
+					<columnFooter height="30" style="Table_CH"/>
+					<detailCell height="30" style="Table_TD">
+						<element kind="textField" uuid="6225f033-4bc8-4d93-9e42-35442dff56ae" key="" x="0" y="0" width="69" height="30" fontName="Arial" fontSize="14.0">
+							<expression><![CDATA[$F{status}]]></expression>
+							<box leftPadding="2"/>
+						</element>
+					</detailCell>
+				</column>
+			</component>
+			<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+			<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+			<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+		</element>
+		<property name="local_mesure_unitheight" value="pixel"/>
+	</summary>
+</jasperReport>

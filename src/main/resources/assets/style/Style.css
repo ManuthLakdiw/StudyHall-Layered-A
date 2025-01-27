@@ -1,0 +1,284 @@
+.buttonPrimary {
+    -fx-background-color: linear-gradient(to right, #0077B6, #263238);
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5;
+    -fx-border-width: 0.2px;
+    -fx-border-color: black;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.5, 0, 1.9);
+}
+.buttonPrimary:hover {
+    -fx-background-color: linear-gradient(to right, #00B4D8, #0077B6);
+    -fx-text-fill: #263238;
+}
+.buttonPrimary:pressed {
+    -fx-background-color: linear-gradient(to right, #263238, #0077B6);
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
+    -fx-translate-y: 2.8px;
+    -fx-border-color: #004f80;
+}
+
+
+
+.buttonDashboard {
+    -fx-padding: 10px 70px 10px 50px;
+    -fx-background-color: linear-gradient(from 30% 0% to 100% 0%, rgba(0, 119, 182, 0.45), rgba(0, 119, 182, 0.25), rgba(255, 255, 255, 0.9));
+    -fx-text-fill: #0077B6;
+    -fx-border-radius: 0;
+    -fx-cursor: hand;
+    -fx-text-alignment: left;
+    -fx-transition: -fx-background-color 0.3s, -fx-effect 0.3s;
+}
+.buttonDashboard:hover {
+    -fx-background-color: linear-gradient(from 30% 0% to 100% 0%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.4)), linear-gradient(from 0% 10% to 100% 0%, #9dE0EF, #CAF0F8);
+    -fx-background-insets: -1;
+}
+.buttonDashboard .icon {
+    -fx-margin-right: 10px;
+    -fx-font-size: 20px;
+}
+
+.hbox:hover {
+    -fx-background-radius: 4px;
+    -fx-background-color: rgb(233, 233, 233);
+}
+
+.selected {
+    -fx-background-radius: 4px;
+    -fx-background-color: rgb(233, 233, 233);
+}
+
+.loginPane {
+    -fx-background-color: radial-gradient(center 50% 50%, radius 150%, #00B4D8 0%, #90E0EF 90%);
+}
+
+.loginPageBackgroundPane {
+    -fx-border-color: #E7E6DD;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, #ffffff, 15, 0.1, 0, 0);
+    -fx-background-radius: 10;
+    -fx-border-radius: 20;
+}
+
+.lblUserName, .lblForgotPassword {
+    -fx-font-family: 'Inter';
+    -fx-font-size: 13px;
+}
+
+.lblUserName {
+    -fx-text-fill: #000000;
+}
+
+.lblForgotPassword {
+    -fx-text-fill: #0003FF;
+    -fx-transition: 0.3s ease;
+}
+.lblForgotPassword:hover {
+    -fx-effect: dropshadow(gaussian, #0003FF, 0.9, 0.1, 0, 0);
+    -fx-cursor: hand;
+}
+
+.txtUserName {
+    -fx-pref-width: 364;
+    -fx-pref-height: 56;
+    -fx-background-color: transparent;
+    -fx-border-color: #000000;
+    -fx-border-width: 1;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.txtDigitCode {
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-alignment: center;
+    -fx-font-size: 24px;
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+}
+.txtDigitCode:focused {
+    -fx-border-width: 5px;
+}
+
+.dialog-pane .custom-alert {
+    -fx-background-color: #0077B6FF;
+    -fx-border-color: #c4c4c4;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 3);
+}
+
+.dialog-pane .header-panel .label {
+    -fx-text-fill: #0077b6;
+    -fx-font-size: 15px;
+}
+
+.dialog-pane .content.label {
+    -fx-text-fill: #263238FF;
+    -fx-font-size: 14px;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-background-color: #263238FF;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 15px;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+}
+
+.dialog-pane .button-bar .button:focused {
+    -fx-border-color: #00b4d8;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 5px;
+}
+
+.loginImage {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 4);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 5px;
+    -fx-background-color: white;
+}
+
+
+/* Make the entire TableView background transparent */
+.table-view {
+    -fx-background-color: transparent;
+}
+
+/* Make the column header background transparent */
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+/* Selection row color */
+.table-view .table-row-cell:selected {
+    -fx-background-color: rgba(124,124,179); /* Solid selected row background color */
+    -fx-opacity: 1; /* Ensure full opacity */
+}
+
+.table-view .table-row-cell:selected .table-cell {
+    -fx-text-fill: #ffffff; /* Keep text visible on selected row */
+    -fx-border-color: #4a3549;
+    -fx-border-width: 0px 1px 0px 0px;
+    -fx-border-radius: 5px;
+    -fx-font-size: 16px;
+    -fx-opacity: 1; /* Ensure full opacity for text */
+    -fx-alignment: center;
+}
+
+/* Table Cell alignment and background */
+.table-view .column-header,
+.table-view .table-cell {
+    -fx-border-color: #4a3549; /* Border color */
+    -fx-border-radius: 5px; /* Rounded borders */
+    -fx-border-width: 0.5px 0.5px 0.5px 0.5px; /* Border width on each side */
+    -fx-text-fill: #4a3549; /* Text color */
+    -fx-background-color: transparent; /* Semi-transparent white */
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-alignment: CENTER_LEFT; /* Align text to center-left */
+
+}
+
+/* Hover effect on rows */
+.table-view .table-row-cell:hover {
+    -fx-border-width: 0.5px; /* Border width on each side */
+    -fx-border-color:  #4a3549;
+}
+
+/* Row styling */
+.table-view .table-row-cell {
+    -fx-pref-height: 28px; /* Row height */
+    -fx-pref-width: 28px; /* Row width */
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent; /* Transparent row background */
+    -fx-text-fill: #03045E; /* Default text color for unselected rows */
+}
+
+/* Transparent column header */
+.table-view .column-header {
+    -fx-pref-height: 35px;
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+/* Transparent ScrollPane backgrounds */
+.table-view .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.table-view .horizontal-bar {
+    -fx-background-color: transparent;
+}
+
+.table-view .vertical-bar {
+    -fx-background-color: transparent;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: black;
+    -fx-background-color: white; /* Solid selected row background color */
+}
+
+/* Change the color when the scrollbar is hovered */
+/*.table-view .scroll-bar .thumb:hover {*/
+/*    -fx-background-color: rgba(124,124,179); !* Solid selected row background color *!*/
+/*}*/
+
+/* Change the track (the area where the thumb moves) color */
+.table-view .scroll-bar .track {
+    -fx-background-color: transparent; /* Light gray color for the track */
+}
+/* Target the specific column by nth-child or column identifier */
+.table-view .applicable-grades-column {
+    -fx-max-width: 200px; /* Limit width */
+    -fx-text-overflow: ellipsis; /* Add ellipsis */
+    -fx-white-space: nowrap; /* Ensure single-line display */
+    -fx-alignment: CENTER_LEFT; /* Align text to the left */
+}
+
+/* On hover, allow scrolling and full display */
+.table-view .applicable-grades-column:hover {
+    -fx-overflow: auto; /* Enable scrolling */
+    -fx-white-space: normal; /* Allow multi-line display */
+    -fx-max-height: 100px; /* Limit height for scrolling */
+    -fx-background-color: rgba(255, 255, 255, 0.9); /* Optional: hover background */
+}
+
+
+
+
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: black; /* Default text color */
+}
+.combo-box .list-cell:hover {
+    -fx-background-color: #03045E; /* Hover background color */
+    -fx-text-fill: white; /* Hover text color */
+}
+
+
+
+.lblClear {
+    -fx-text-fill: black;
+    -fx-transition: 0.3s ease;
+}
+.lblClear:hover {
+    -fx-effect: dropshadow(gaussian, black, 0.9, 0.1, 0, 0);
+    -fx-cursor: hand;
+}
+
+
+

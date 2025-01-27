@@ -1,0 +1,62 @@
+/* DatePicker Text Field Style */
+.date-picker .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: black; /* Black text color */
+    -fx-focus-color: transparent;
+}
+
+/* Arrow button background */
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+}
+
+/* Arrow icon color */
+.date-picker .arrow {
+    -fx-background-color: black;
+    -fx-text-fill: #03045E; /* Blue arrow icon */
+}
+
+/* Day cell style */
+.date-picker .calendar-popup .day-cell {
+    -fx-background-color: transparent; /* Transparent background for day cells */
+    -fx-border-color: #03045E; /* Blue border for day cells */
+    -fx-border-width: 1px; /* Border width */
+    -fx-text-fill: #03045E; /* Blue text color */
+}
+
+/* Hover effect for day cells */
+.date-picker .calendar-popup .day-cell:hover {
+    -fx-background-color: #03045E; /* Blue background on hover */
+    -fx-text-fill: white; /* White text on hover */
+    -fx-border-color: transparent; /* Remove border on hover */
+}
+
+/* Selected day cell style */
+.date-picker .day-cell:selected {
+    -fx-background-color: #03045E; /* Blue background for selected day */
+    -fx-text-fill: white; /* White text for selected day */
+    -fx-border-color: transparent; /* No border on selected day */
+    -fx-border-width: 0; /* Remove border on selected day */
+}
+
+/* Current day cell style */
+.date-picker .current-day {
+    -fx-background-color: #03045E; /* Blue background for current day */
+    -fx-text-fill: white; /* White text for current day */
+    -fx-border-color: transparent; /* Remove border for current day */
+    -fx-border-width: 0; /* Remove border for current day */
+}
+
+/* Focused day cell style */
+.date-picker .day-cell:focused {
+    -fx-background-color: #03045E; /* Blue background when focused */
+    -fx-text-fill: white; /* White text when focused */
+    -fx-border-color: transparent; /* Remove border when focused */
+    -fx-border-width: 0; /* No border on focused day */
+}
+
+/* Remove lingering selection when changing months */
+.date-picker .calendar-popup .day-cell:selected:pressed {
+    -fx-background-color: #03045E; /* Blue background for pressed selected day */
+    -fx-text-fill: white;
+}

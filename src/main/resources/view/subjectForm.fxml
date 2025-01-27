@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckComboBox?>
+
+<Pane fx:id="subjectPane" accessibleRole="TEXT_FIELD" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="378.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse.instritutefirstsemfinal.controller.SubjectFormController">
+   <children>
+      <ImageView fitHeight="381.0" fitWidth="283.0" layoutX="503.0" layoutY="-2.0" opacity="0.05" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/image/studentregistration.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="17.0" layoutY="191.0" prefHeight="48.0" prefWidth="128.0" text="Description (Optional)">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <HBox layoutX="17.0" layoutY="234.0" prefHeight="50.0" prefWidth="753.0">
+         <children>
+            <JFXTextArea fx:id="tareaDescription" focusColor="TRANSPARENT" onKeyPressed="#tareaDescriptionOnKeyPressed" onKeyTyped="#tareaDescriptionOnKeyTyped" prefHeight="50.0" prefWidth="752.0" style="-fx-background-color: transparent; -fx-border-radius: 5px; -fx-border-color: #03045E;" unFocusColor="TRANSPARENT" />
+         </children>
+      </HBox>
+      <Label layoutX="17.0" layoutY="-3.0" prefHeight="32.0" prefWidth="1024.0" text="Subject Information" textFill="#03045e">
+         <font>
+            <Font name="Lahore Gurmukhi SemiBold" size="16.0" />
+         </font>
+      </Label>
+      <Line endX="690.9425659179688" endY="126.26564025878906" layoutX="78.0" layoutY="-95.0" opacity="0.8" startX="-60.30149459838867" startY="126.26564025878906" stroke="#03045e" strokeLineCap="ROUND">
+         <effect>
+            <Bloom />
+         </effect>
+      </Line>
+      <Label layoutX="17.0" layoutY="30.0" prefHeight="48.0" prefWidth="128.0" text="Subject ID">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <HBox layoutX="17.0" layoutY="73.0" prefHeight="47.0" prefWidth="1024.0">
+         <children>
+            <Label fx:id="lblSubID" prefHeight="32.0" prefWidth="266.0" style="-fx-background-color: transparent; -fx-border-color: #03045E; -fx-border-radius: 5;">
+               <font>
+                  <Font name="Microsoft Sans Serif" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <CheckComboBox fx:id="checkComboBoxGrade" prefHeight="32.0" prefWidth="386.0">
+               <HBox.margin>
+                  <Insets left="100.0" />
+               </HBox.margin>
+            </CheckComboBox>
+         </children>
+      </HBox>
+      <Label layoutX="383.0" layoutY="30.0" prefHeight="48.0" prefWidth="128.0" text="Grade">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <HBox layoutX="17.0" layoutY="150.0" prefHeight="47.0" prefWidth="392.0">
+         <children>
+            <TextField fx:id="txtSubName" onKeyPressed="#txtSubNameOnKeyPressed" onKeyTyped="#txtSubNameOnKeyTyped" prefHeight="32.0" prefWidth="361.0" promptText="information and communication technology" style="-fx-background-color: transparent; -fx-border-color: #03045E; -fx-border-width: 1px 1px 1px 1px; -fx-border-radius: 5;">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <Label layoutX="17.0" layoutY="107.0" prefHeight="48.0" prefWidth="128.0" text="Name">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <HBox layoutX="17.0" layoutY="187.0" prefHeight="21.0" prefWidth="359.0">
+         <children>
+            <Label fx:id="lblSubNameRegex" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="557.0" textFill="#4a4848">
+               <font>
+                  <Font name="Humnst777 Cn BT" size="10.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" layoutX="17.0" layoutY="305.0" prefHeight="50.0" prefWidth="573.0">
+         <children>
+            <Button fx:id="btnReset" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="35.0" prefWidth="145.0" style="-fx-background-color: #c800ff; -fx-background-radius: 5px;" styleClass="button-admin" stylesheets="@../assets/style/Button.css" text="Reset" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnUpdate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="35.0" prefWidth="145.0" style="-fx-background-color: #00B4D8; -fx-background-radius: 5px;" styleClass="button-admin" stylesheets="@../assets/style/Button.css" text="Update" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnDelete" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="35.0" prefWidth="145.0" style="-fx-background-color: #EB3223; -fx-background-radius: 5px;" styleClass="button-admin" stylesheets="@../assets/style/Button.css" text="Delete" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="142.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnSave" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="37.0" prefWidth="145.0" style="-fx-background-color: #03045E; -fx-background-radius: 5px;" styleClass="button-admin" stylesheets="@../assets/style/Button.css" text="Save" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</Pane>

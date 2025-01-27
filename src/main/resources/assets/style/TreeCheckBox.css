@@ -1,0 +1,96 @@
+/* General TreeView styling */
+#tree-check-box {
+    -fx-background-color: transparent;
+    -fx-border-color: #ccc;
+    -fx-border-width: 2px;
+}
+
+/* CheckBox styling */
+.check-box {
+    -fx-text-fill: transparent;
+    -fx-font-size: 14px;
+}
+
+.root-tree-item .text {
+    -fx-fill: #03045E; /* Root node text color */
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* CheckBox hover effect */
+.check-box:hover {
+    -fx-background-color: transparent; /* Light green background */
+}
+
+/* TreeCell styling */
+.tree-cell {
+    -fx-padding: 5 10;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: transparent;
+}
+
+/* Highlight selected item */
+.tree-cell:focused {
+    -fx-background-color: transparent; /* Yellow background for focus */
+}
+
+/* Change icon or graphic if necessary */
+.tree-view .tree-cell .tree-disclosure-node {
+    -fx-padding: 0 5;
+}
+
+#tree-check-box {
+    -fx-background-color: transparent;
+    -fx-border-color: #ccc;
+    -fx-border-width: 2px;
+}
+
+/* CheckBox styling */
+.tree-view .check-box {
+    -fx-text-fill: #333; /* Text color */
+    -fx-font-size: 14px; /* Font size */
+    -fx-mark-color:  #03045E; /* Checkmark color */
+}
+
+/* CheckBox hover effect */
+.tree-view .check-box:hover {
+    -fx-background-color: #03045E; /* Light green background */
+    /*-fx-border-radius: 5px; !* Rounded edges *!*/
+    /*-fx-border-color: #03045E; !* Border on hover *!*/
+    /*-fx-border-width: 0.5px;*/
+}
+
+
+
+.tree-view .scroll-bar .track {
+    -fx-background-color: transparent; /* Light gray color for the track */
+}
+
+.tree-view .scroll-bar .thumb {
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #03045E;
+    -fx-background-color: transparent; /* Solid selected row background color */
+}
+
+tree-cell:selected {
+    -fx-background-color: transparent; /* Selected node's background is transparent */
+    -fx-text-fill: black; /* Change text color if needed */
+}
+
+/* Keep the background transparent for normal nodes */
+.tree-cell {
+    -fx-background-color: transparent; /* Default background is transparent */
+    -fx-text-fill: black; /* Default text color */
+}
+
+/* Optionally, root node custom style */
+.root-tree-item .text {
+    -fx-fill: #03045E; /* Root node text color */
+}
+
+.tree-cell .arrow {
+    -fx-background-color: black; /* Make the arrow's background transparent */
+    -fx-fill: black; /* Change arrow color if needed */
+}

@@ -1,0 +1,39 @@
+/* CheckBox container */
+.check-box {
+    -fx-background-color: transparent; /* Transparent background for the checkbox container */
+    -fx-border-color: #03045E; /* Blue border for the checkbox */
+    -fx-border-width: 1px; /* Border width */
+    -fx-padding: 5px; /* Padding around checkbox */
+    -fx-alignment: center-left; /* Align checkbox to the left */
+    -fx-min-width: 35px; /* Minimum width */
+    -fx-min-height: 35px; /* Minimum height */
+}
+
+/* Small checkmark box background */
+.check-box .check-mark {
+    -fx-background-color: transparent; /* Transparent background for the small checkmark box */
+    -fx-border-color: #03045E; /* Blue border for the small checkmark box */
+    -fx-border-width: 2px; /* Border width for the checkmark box */
+    -fx-border-radius: 3px; /* Rounded corners for the checkmark box */
+    -fx-width: 20px; /* Width of the small checkmark box */
+    -fx-height: 20px; /* Height of the small checkmark box */
+}
+
+/* Text inside the checkbox */
+.check-box .text {
+    -fx-text-fill: #03045E; /* Blue text color */
+    -fx-padding: 0 10px; /* Padding inside text area */
+    -fx-transition: 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* Selected checkbox style */
+.check-box:selected .check-mark {
+    -fx-background-color: #03045E; /* Blue background for the checkmark box when selected */
+    -fx-border-color: transparent; /* No border when selected */
+}
+
+/* Selected checkbox text style */
+.check-box:selected .text {
+    -fx-translate-x: 15px; /* Move the text slightly when selected */
+    -fx-text-fill: #ffeb3b; /* Yellow text when selected */
+}

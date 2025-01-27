@@ -1,0 +1,48 @@
+/* Default styles for HBoxes with blue gradients */
+.hbox1 {
+    -fx-background-color: linear-gradient(to bottom left, #E0DEDEFF, #90E0EF);
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-padding: 20;
+    -fx-cursor: hand;
+
+    /*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.2, 0, 0); !* Always embossed shadow *!*/
+}
+
+/* White and black accent for the other HBoxes */
+.hbox2 {
+    -fx-background-color: linear-gradient(to top left, #E0DEDEFF, #90E0EF);    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-padding: 20;
+    -fx-cursor: hand;
+
+    /*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.2, 0, 0); !* Always embossed shadow *!*/
+}
+
+.hbox3 {
+    -fx-background-color: linear-gradient(to bottom right, #E0DEDEFF, #90E0EF);    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-padding: 20;
+    -fx-cursor: hand;
+
+    /*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.2, 0, 0); !* Always embossed shadow *!*/
+}
+
+/* Hover effect for HBoxes */
+.hbox1:hover {
+    -fx-effect: dropshadow(gaussian, #E0DEDEFF, 10, 0, 0, 5); /* Emboss effect with subtle blue shadow */
+    -fx-scale-x: 1.00;
+    -fx-scale-y: 1.06; /* Minimal scaling on hover */
+}
+
+.hbox2:hover {
+    -fx-effect: dropshadow(gaussian, #E0DEDEFF, 10, 0, 0, 5); /* Emboss effect with subtle blue shadow */
+    -fx-scale-x: 1.00;
+    -fx-scale-y: 1.06; /* Minimal scaling on hover */
+}
+
+.hbox3:hover {
+    -fx-effect: dropshadow(gaussian, #E0DEDEFF, 10, 0, 0, 5); /* Emboss effect with subtle blue shadow */
+        -fx-scale-x: 1.00;
+    -fx-scale-y: 1.06; /* Minimal scaling on hover */
+}
