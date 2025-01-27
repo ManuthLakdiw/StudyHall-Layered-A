@@ -1,5 +1,6 @@
 package lk.ijse.gdse.instritutefirstsemfinal.dao;
 
+import lk.ijse.gdse.instritutefirstsemfinal.dao.impl.QueryDAOImpl;
 import lk.ijse.gdse.instritutefirstsemfinal.dao.impl.UserDAOImpl;
 
 public class DAOFactory {
@@ -17,17 +18,16 @@ public class DAOFactory {
     }
 
     public enum DAOType {
-        USER
+        USER , QUERY
     }
 
     public SuperDAO getDAO(DAOType daoType) {
-        switch (daoType) {
-            case USER:
-                return new UserDAOImpl();
+        return switch (daoType) {
+            case USER -> new UserDAOImpl();
+            case QUERY -> new QueryDAOImpl();
 
-            default:
-                return null;
-        }
+            default -> null;
+        };
 
     }
 
