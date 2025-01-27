@@ -17,6 +17,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.SubjectBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.SubjectDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.SubjectTm;
 import lk.ijse.gdse.instritutefirstsemfinal.model.SubjectModel;
@@ -24,6 +26,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -33,6 +36,7 @@ public class SubjectTableFormController implements Initializable {
 
     SubjectModel model = new SubjectModel();
     SubjectFormController subjectFormController = new SubjectFormController();
+    SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
 
 
     @FXML
@@ -96,7 +100,7 @@ public class SubjectTableFormController implements Initializable {
     }
 
     @FXML
-    private void tblSubjectOnClicked(MouseEvent event) {
+    private void tblSubjectOnClicked(MouseEvent event) throws SQLException {
         SubjectTm isSelected = tblSubject.getSelectionModel().getSelectedItem();
         if (isButtonClicked){
             if (isSelected != null) {
@@ -160,8 +164,8 @@ public class SubjectTableFormController implements Initializable {
         }
 
 
-    public void loadSubjectTable() {
-        ArrayList<SubjectDto> subjectDtos = model.getAllSubjects();
+    public void loadSubjectTable() throws SQLException {
+        ArrayList<SubjectDto> subjectDtos = subjectBO.getAllSubjectsAndRelatedGrades();
         ObservableList<SubjectTm> subjectTms = FXCollections.observableArrayList();
 
         for (SubjectDto subjectDto : subjectDtos) {
@@ -193,7 +197,10 @@ public class SubjectTableFormController implements Initializable {
         colDescription.setCellValueFactory(new PropertyValueFactory<>("subjectDescription"));
 
 
-
-        loadSubjectTable();
+        try {
+            loadSubjectTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package lk.ijse.gdse.instritutefirstsemfinal.bo;
 
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.UserBO;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.impl.SubjectBOImpl;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.impl.UserBOImpl;
 
 public class BOFactory {
@@ -19,16 +20,15 @@ public class BOFactory {
 
 
     public enum BOType{
-        USER
+        USER , SUBJECT
     }
 
     public SuperBO getBO(BOType boType){
-        switch (boType){
-            case USER:
-                return new UserBOImpl();
+        return switch (boType) {
+            case USER -> new UserBOImpl();
+            case SUBJECT -> new SubjectBOImpl();
 
-            default:
-                return null;
-        }
+            default -> null;
+        };
     }
 }

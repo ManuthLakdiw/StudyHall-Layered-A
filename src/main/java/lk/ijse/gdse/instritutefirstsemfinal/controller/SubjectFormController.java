@@ -19,6 +19,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.util.RegexUtil;
 import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 
 public class SubjectFormController implements Initializable {
@@ -100,7 +101,7 @@ public class SubjectFormController implements Initializable {
     //////////////////////////////////// BUTTONS //////////////////////////////////
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
+    void btnDeleteOnAction(ActionEvent event) throws SQLException {
         RegexUtil.resetStyle(txtSubName);
         Optional<ButtonType> buttonType = AlertUtil.ConfirmationAlert("Are you sure you want to delete this Subject?", ButtonType.NO, ButtonType.YES);
         if (buttonType.isPresent() && buttonType.get() == ButtonType.YES) {
@@ -122,7 +123,7 @@ public class SubjectFormController implements Initializable {
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) throws SQLException {
         ObservableList<String> selectedItems = checkComboBoxGrade.getCheckModel().getCheckedItems();
 
         subjectId = lblSubID.getText();
@@ -173,7 +174,7 @@ public class SubjectFormController implements Initializable {
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
+    void btnUpdateOnAction(ActionEvent event) throws SQLException {
         RegexUtil.resetStyle(txtSubName);
         btnUpdate.setDisable(false);
         subjectName = txtSubName.getText();

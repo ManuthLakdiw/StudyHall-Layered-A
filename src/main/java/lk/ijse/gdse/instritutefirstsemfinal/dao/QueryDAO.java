@@ -9,4 +9,6 @@ import java.util.ArrayList;
 public interface QueryDAO extends SuperDAO {
 
     ArrayList<SubjectCustom> getAllSubjectsAndRelatedGrades() throws SQLException;
+
+    SubjectCustom getExistsSubjectsAndRelatedGrades(String subjectID) throws SQLException;
 }
