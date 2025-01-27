@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.SubjectBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.SubjectDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.GradeDto;
 import lk.ijse.gdse.instritutefirstsemfinal.model.GradeModel;
@@ -27,6 +29,7 @@ public class SubjectFormController implements Initializable {
     SubjectModel subjectModel = new SubjectModel();
     GradeModel gradeModel = new GradeModel();
     private SubjectTableFormController tableSubjectFormController;
+    SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
 
     public void setTblSubjectFormController(SubjectTableFormController tableSubjectFormController) {
         this.tableSubjectFormController = tableSubjectFormController;
@@ -161,7 +164,8 @@ public class SubjectFormController implements Initializable {
 
             SubjectDto subjectDto = new SubjectDto(subjectId, subjectName, subjectDescription);
 
-            boolean isSaved = subjectModel.saveSubjectWithGrades(subjectDto, gradeIds);
+//            boolean isSaved = subjectModel.saveSubjectWithGrades(subjectDto, gradeIds);
+            boolean isSaved = subjectBO.saveSubject(subjectDto, gradeIds);
 
             if (isSaved) {
                 AlertUtil.informationAlert(UserFormController.class, null, true, "Subject Saved Successfully");
