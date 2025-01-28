@@ -6,6 +6,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.TeacherCustom;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface QueryDAO extends SuperDAO {
 
@@ -16,4 +17,6 @@ public interface QueryDAO extends SuperDAO {
     ArrayList<TeacherCustom> getAllTeachersAndRelatedGrades() throws SQLException;
 
     boolean getExistsTeachersAndRelatedGrades(TeacherCustom teacherCustom) throws SQLException;
+
+    List<String> getGradesForSubject(String subjectName) throws SQLException;
 }

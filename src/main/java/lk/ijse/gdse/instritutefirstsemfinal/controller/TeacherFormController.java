@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.SubjectBO;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.TeacherBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.SubjectDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.TeacherDto;
@@ -29,8 +30,9 @@ import java.util.ResourceBundle;
 public class TeacherFormController implements Initializable {
 
 //    TeacherModel teacherModel = new TeacherModel();
-    SubjectModel subjectModel = new SubjectModel();
-    GradeModel gradeModel = new GradeModel();
+//    SubjectModel subjectModel = new SubjectModel();
+//    GradeModel gradeModel = new GradeModel();
+
     private TeacherTableFormController tableTeacherFormController;
 
     public void setTableTeacherFormController(TeacherTableFormController tableTeacherFormController) {
@@ -38,6 +40,8 @@ public class TeacherFormController implements Initializable {
     }
 
     TeacherBO teacherBO = (TeacherBO) BOFactory.getInstance().getBO(BOFactory.BOType.TEACHER);
+
+    SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
 
 
 
@@ -461,7 +465,7 @@ public class TeacherFormController implements Initializable {
     //////////////////////////////////
 
     @FXML
-    private void cmbSubjectOnAction(ActionEvent actionEvent) {
+    private void cmbSubjectOnAction(ActionEvent actionEvent) throws SQLException {
         String selectedSubject = cmbSubject.getSelectionModel().getSelectedItem();
 
         // If no subject is selected, disable the TreeView
@@ -471,7 +475,7 @@ public class TeacherFormController implements Initializable {
         }
         checkFieldsEmpty();
         treeViewSUbAndGrades.setOpacity(1);
-        ArrayList<SubjectDto> allSubjects = subjectModel.getAllSubjects();
+        ArrayList<SubjectDto> allSubjects = subjectBO.getAllSubjectsAndRelatedGrades();
         isSaveUpdateEnable();
 
         for (SubjectDto subjectDto : allSubjects) {
@@ -520,7 +524,7 @@ public class TeacherFormController implements Initializable {
 
     private void refreshPage() throws SQLException, ClassNotFoundException {
         cmbSubject.getItems().clear();
-        ArrayList<SubjectDto> subjectInformations = subjectModel.getAllSubjects();
+        ArrayList<SubjectDto> subjectInformations = subjectBO.getAllSubjectsAndRelatedGrades();
 
         // Add subjects to the ComboBox
         for (SubjectDto subjectDto : subjectInformations) {
@@ -608,7 +612,7 @@ public class TeacherFormController implements Initializable {
             cmbSubject.setValue(dto.getSubject());
 
             // Fetch grades related to the subject
-            List<String> subjectGrades = gradeModel.getGradesForSubject(dto.getSubject());
+            List<String> subjectGrades = subjectBO.getGradesForSubject(dto.getSubject());
             String[] grades = dto.getGrades();
 
             // Create the root item for the TreeView

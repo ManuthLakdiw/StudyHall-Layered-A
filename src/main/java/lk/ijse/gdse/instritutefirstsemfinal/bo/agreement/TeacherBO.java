@@ -23,4 +23,6 @@ public interface TeacherBO extends SuperBO {
 
     boolean getExistsTeachersAndRelatedGrades(TeacherDto teacherDto) throws SQLException;
 
+    String getTeacherEmail(String selectedTeacherId) throws SQLException;
+
 }

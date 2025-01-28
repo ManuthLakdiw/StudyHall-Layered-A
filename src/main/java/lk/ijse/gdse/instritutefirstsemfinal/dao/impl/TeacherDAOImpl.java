@@ -73,4 +73,17 @@ public class TeacherDAOImpl implements TeacherDAO {
     public Teacher search(String id) throws SQLException, ClassNotFoundException {
         return null;
     }
+
+
+    @Override
+    public String getTeacherEmail(String selectedTeacherId) throws SQLException {
+        ResultSet resultSet = CrudUtil.execute("select email from teacher where t_id = ?" ,
+                selectedTeacherId
+        );
+
+        if (resultSet.next()) {
+            return resultSet.getString("email");
+        }
+        return "Not found";
+    }
 }

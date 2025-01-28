@@ -9,6 +9,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.util.CrudUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class QueryDAOImpl implements QueryDAO {
 
@@ -138,6 +139,23 @@ public class QueryDAOImpl implements QueryDAO {
 
         }
         return false;
+    }
+
+    @Override
+    public List<String> getGradesForSubject(String subjectName) throws SQLException {
+        List<String> grades = new ArrayList<>();
+
+        ResultSet resultSet = CrudUtil.execute(
+                "SELECT s.sub_name, g.grade FROM grade g JOIN subject_grade sg" +
+                        " ON g.g_id = sg.grade_id JOIN subject s ON sg.subject_id = s.sub_id" +
+                        " WHERE s.sub_name = ?" ,
+                subjectName
+        );
+
+        while (resultSet.next()) {
+            grades.add(resultSet.getString(2));
+        }
+        return grades;
     }
 
 

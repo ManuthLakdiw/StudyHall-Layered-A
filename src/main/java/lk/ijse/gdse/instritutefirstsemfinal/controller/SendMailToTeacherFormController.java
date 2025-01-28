@@ -8,6 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.TeacherBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.TeacherDto;
 import lk.ijse.gdse.instritutefirstsemfinal.model.TeacherModel;
 import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
@@ -18,6 +20,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Properties;
@@ -27,7 +30,11 @@ import java.util.ResourceBundle;
 public class SendMailToTeacherFormController implements Initializable {
 
     private TeacherTableFormController teacherTableFormController;
-    TeacherModel teacherModel = new TeacherModel();
+
+
+//    TeacherModel teacherModel = new TeacherModel();
+
+    TeacherBO teacherBO = (TeacherBO) BOFactory.getInstance().getBO(BOFactory.BOType.TEACHER);
 
     @FXML
     private Button btnSend;
@@ -123,7 +130,12 @@ public class SendMailToTeacherFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cmbTeacherID.requestFocus();
-        ArrayList<TeacherDto> teachers = teacherModel.getAllTeachers();
+        ArrayList<TeacherDto> teachers = null;
+        try {
+            teachers = teacherBO.getAllTeachersAndRelatedGrades();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         for (TeacherDto teacherDto : teachers) {
             cmbTeacherID.getItems().add(teacherDto.getTeacherId());
@@ -131,11 +143,11 @@ public class SendMailToTeacherFormController implements Initializable {
 
     }
 
-    public void cmbTeacherIDOnAction(ActionEvent actionEvent) {
+    public void cmbTeacherIDOnAction(ActionEvent actionEvent) throws SQLException {
         String selectedTeacherId = cmbTeacherID.getValue();
 
 
-        teacherEmail = teacherModel.getEmailByTeacherID(selectedTeacherId);
+        teacherEmail = teacherBO.getTeacherEmail(selectedTeacherId);
         lblGmail.setText(teacherEmail);
     }
 }

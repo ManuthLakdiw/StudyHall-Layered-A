@@ -17,5 +17,6 @@ public interface SubjectBO extends SuperBO {
     boolean deleteSubject(String subjectId) throws SQLException, ClassNotFoundException;
     boolean existsSubjectByName(String subjectName) throws SQLException;
     SubjectDto getExistsSubjectsAndRelatedGrades(String subjectID) throws SQLException;
+    List<String> getGradesForSubject(String subjectName) throws SQLException;
 
 }

@@ -172,5 +172,10 @@ public class SubjectBOImpl implements SubjectBO {
 
     }
 
+    @Override
+    public List<String> getGradesForSubject(String subjectName) throws SQLException {
+        return queryDAO.getGradesForSubject(subjectName);
+    }
+
 
 }

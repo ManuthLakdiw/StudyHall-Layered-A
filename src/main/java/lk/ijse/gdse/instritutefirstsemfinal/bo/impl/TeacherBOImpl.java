@@ -169,5 +169,10 @@ public class TeacherBOImpl implements TeacherBO {
         return queryDAO.getExistsTeachersAndRelatedGrades(teacherCustom);
     }
 
+    @Override
+    public String getTeacherEmail(String selectedTeacherId) throws SQLException {
+        return teacherDAO.getTeacherEmail(selectedTeacherId);
+    }
+
 
 }
