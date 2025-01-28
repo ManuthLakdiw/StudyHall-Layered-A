@@ -10,7 +10,6 @@ import lk.ijse.gdse.instritutefirstsemfinal.dto.SubjectDto;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Subject;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.SubjectGrade;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.SubjectCustom;
-import lk.ijse.gdse.instritutefirstsemfinal.util.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,7 +22,7 @@ public class SubjectBOImpl implements SubjectBO {
 
     QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.QUERY);
 
-    SubjectGradeDAO subjectGradeDAO = (SubjectGradeDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.SUBJECTGRADE);
+    SubjectGradeDAO subjectGradeDAO = (SubjectGradeDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.SUBJECT_GRADE);
 
     @Override
     public ArrayList<SubjectDto> getAllSubjectsAndRelatedGrades() throws SQLException {

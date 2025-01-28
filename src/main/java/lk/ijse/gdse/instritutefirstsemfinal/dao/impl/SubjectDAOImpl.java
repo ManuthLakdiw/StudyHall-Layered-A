@@ -1,6 +1,5 @@
 package lk.ijse.gdse.instritutefirstsemfinal.dao.impl;
 
-import lk.ijse.gdse.instritutefirstsemfinal.dao.DAOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.dao.agreement.SubjectDAO;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Subject;
 import lk.ijse.gdse.instritutefirstsemfinal.util.CrudUtil;
@@ -109,10 +108,14 @@ public class SubjectDAOImpl implements SubjectDAO {
     @Override
     public String getSubjectIDFromName(String subjectName) throws SQLException {
 
-        return CrudUtil.execute(
+        ResultSet resultSet = CrudUtil.execute(
                 "SELECT sub_id FROM subject WHERE sub_name = ?",
                 subjectName
         );
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        return null;
     }
 
     @Override

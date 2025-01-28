@@ -249,7 +249,10 @@ public class TeacherFormController implements Initializable {
         TeacherDto teacherDto = new TeacherDto(id, name, contactNo, email, subjectName);
 
         // Save teacher details
-        boolean isSaved = teacherModel.saveTeacher(teacherDto, selectedGrades);
+//        boolean isSaved = teacherModel.saveTeacher(teacherDto, selectedGrades);
+            boolean isSaved = teacherBO.saveTeacher(teacherDto, selectedGrades);
+        System.out.println("teacher save -> " + isSaved);
+
 
         if (isSaved) {
             AlertUtil.informationAlert(this.getClass(),null,true,"Teacher Saved Successfully");

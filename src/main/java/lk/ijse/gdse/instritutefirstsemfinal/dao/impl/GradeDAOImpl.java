@@ -72,4 +72,15 @@ public class GradeDAOImpl implements GradeDAO {
         }
         return gradeIds;
     }
+
+    @Override
+    public String getGradeIdFromName(String grade) throws SQLException {
+        ResultSet resultSet = CrudUtil.execute("SELECT g_id FROM grade WHERE grade = ?",
+                grade
+        );
+        if (resultSet.next()) {
+            return resultSet.getString("g_id");
+        }
+        return null;
+    }
 }
