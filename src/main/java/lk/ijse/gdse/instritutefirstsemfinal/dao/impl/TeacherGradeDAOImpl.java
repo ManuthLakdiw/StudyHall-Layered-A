@@ -48,7 +48,11 @@ public class TeacherGradeDAOImpl implements TeacherGradeDAO {
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return false;
+
+        return CrudUtil.execute("DELETE FROM teacher_grade WHERE teacher_id = ?",
+                id
+
+        );
     }
 
     @Override

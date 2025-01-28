@@ -61,11 +61,9 @@ public class TeacherBOImpl implements TeacherBO {
             teacherEntity.setSubjectID(subjectDAO.getSubjectIDFromName(teacherDto.getSubject()));
 
             if (!teacherDAO.save(teacherEntity)){
-                System.out.println("teacher table doesnt save");
                 connection.rollback();
                 return false;
             }
-            System.out.println("teacher table saved");
 
             String[] gradeIdsArray = grades.toArray(new String[0]);
             TeacherGrade teacherGrade = new TeacherGrade();
@@ -73,12 +71,10 @@ public class TeacherBOImpl implements TeacherBO {
             teacherGrade.setGrade(gradeIdsArray);
 
             if (!teacherGradeDAO.save(teacherGrade)){
-                System.out.println("teacher grade table doesnt save");
                 connection.rollback();
                 return false;
 
             }
-            System.out.println("teacher grade table saved");
             connection.commit();
             return true;
 
@@ -102,7 +98,50 @@ public class TeacherBOImpl implements TeacherBO {
 
     @Override
     public boolean updateTeacher(TeacherDto teacherDto, List<String> grades) throws SQLException {
-        return false;
+        Connection connection = null;
+
+        try {
+            connection = DBConnection.getInstance().getConnection();
+            connection.setAutoCommit(false);
+
+            Teacher teacherEntity = new Teacher();
+            teacherEntity.setTeacherId(teacherDto.getTeacherId());
+            teacherEntity.setTeacherName(teacherDto.getName());
+            teacherEntity.setPhoneNumber(teacherDto.getPhoneNumber());
+            teacherEntity.setEmail(teacherDto.getEmail());
+            teacherEntity.setSubjectID(subjectDAO.getSubjectIDFromName(teacherDto.getSubject()));
+
+            if (!teacherDAO.update(teacherEntity)){
+                connection.rollback();
+                return false;
+            }
+
+            if (!teacherGradeDAO.delete(teacherDto.getTeacherId())){
+                connection.rollback();
+                return false;
+            }
+
+
+            String[] gradeIdsArray = grades.toArray(new String[0]);
+            TeacherGrade teacherGrade = new TeacherGrade();
+            teacherGrade.setTeacherID(teacherDto.getTeacherId());
+            teacherGrade.setGrade(gradeIdsArray);
+
+            if (!teacherGradeDAO.save(teacherGrade)){
+                connection.rollback();
+                return false;
+            }
+
+            connection.commit();
+            return true;
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }finally {
+            connection.setAutoCommit(true);
+        }
+
     }
 
 

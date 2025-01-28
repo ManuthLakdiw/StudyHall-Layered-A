@@ -192,7 +192,9 @@ public class TeacherFormController implements Initializable {
 
         TeacherDto teacherDto = new TeacherDto(id, name, contactNo, email, subject);
 
-        boolean isUpdated = teacherModel.updateTeacher(teacherDto, selectedGrades);
+//        boolean isUpdated = teacherModel.updateTeacher(teacherDto, selectedGrades);
+        boolean isUpdated = teacherBO.updateTeacher(teacherDto, selectedGrades);
+
 
         if (isUpdated) {
             AlertUtil.informationAlert(TeacherFormController.class, null, true, "Teacher updated successfully!");
