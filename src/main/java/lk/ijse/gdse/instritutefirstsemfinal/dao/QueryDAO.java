@@ -14,4 +14,6 @@ public interface QueryDAO extends SuperDAO {
     SubjectCustom getExistsSubjectsAndRelatedGrades(String subjectID) throws SQLException;
 
     ArrayList<TeacherCustom> getAllTeachersAndRelatedGrades() throws SQLException;
+
+    boolean getExistsTeachersAndRelatedGrades(TeacherCustom teacherCustom) throws SQLException;
 }

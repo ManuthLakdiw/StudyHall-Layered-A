@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 
 public class TeacherFormController implements Initializable {
 
-    TeacherModel teacherModel = new TeacherModel();
+//    TeacherModel teacherModel = new TeacherModel();
     SubjectModel subjectModel = new SubjectModel();
     GradeModel gradeModel = new GradeModel();
     private TeacherTableFormController tableTeacherFormController;
@@ -127,7 +127,13 @@ public class TeacherFormController implements Initializable {
             }
         });
 
-        refreshPage();
+        try {
+            refreshPage();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -135,12 +141,14 @@ public class TeacherFormController implements Initializable {
     ////////////////////////////////////////////////////////////////////
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) throws SQLException {
+    void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         Optional<ButtonType> result = AlertUtil.ConfirmationAlert("Are your sure you want to delete this teacher ["+lblTeacherID.getText()+"]",ButtonType.YES,ButtonType.NO);
 
         if (result.get() == ButtonType.YES){
-            boolean isDeleted = teacherModel.deleteTeacherById(lblTeacherID.getText());
+//            boolean isDeleted = teacherModel.deleteTeacherById(lblTeacherID.getText());
+            boolean isDeleted = teacherBO.deleteTeacher(lblTeacherID.getText());
+
             if (isDeleted) {
                 AlertUtil.informationAlert(this.getClass(), null, true, "Teacher deleted successfully!");
                 refreshPage();
@@ -153,7 +161,7 @@ public class TeacherFormController implements Initializable {
 
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) throws SQLException {
+    void btnUpdateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         // Step 1: Collect input from UI
         String id = lblTeacherID.getText();
         String name = txtName.getText();
@@ -185,7 +193,11 @@ public class TeacherFormController implements Initializable {
             return;
         }
 
-        if (teacherModel.isValuesUnchanged(id, name, contactNo, email, subject, selectedGrades)) {
+
+        // Assuming `selectedGrades` is of type List<String>
+        String[] gradesArray = selectedGrades.toArray(new String[0]);
+
+        if (teacherBO.getExistsTeachersAndRelatedGrades(new TeacherDto(id, name, contactNo, email, subject, gradesArray))) {
             AlertUtil.informationAlert(this.getClass(), null, false, "No changes detected. Update is not necessary.");
             return;
         }
@@ -208,7 +220,7 @@ public class TeacherFormController implements Initializable {
 
 
     @FXML
-    void btnResetOnAction(ActionEvent event) {
+    void btnResetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         cmbSubject.getSelectionModel().clearSelection();
         refreshPage();
 
@@ -216,7 +228,7 @@ public class TeacherFormController implements Initializable {
 
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) throws SQLException {
+    void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         // Collect teacher details from the form
         id = lblTeacherID.getText();
         name = txtName.getText();
@@ -289,11 +301,11 @@ public class TeacherFormController implements Initializable {
     }
 
     @FXML
-    void txtContactNumberOnKeyTyped(KeyEvent event) {
+    void txtContactNumberOnKeyTyped(KeyEvent event) throws SQLException {
         contactNo = txtContactNumber.getText();
         btnReset.setDisable(false);
         lblPhoneNumber.setStyle("-fx-text-fill: #4a4848;");
-        ArrayList<TeacherDto> teacherDtos = teacherModel.getAllTeachers();
+        ArrayList<TeacherDto> teacherDtos = teacherBO.getAllTeachersAndRelatedGrades();
         ArrayList<String> teacherContactNumbers = new ArrayList<>();
 
         for (TeacherDto teacherDto : teacherDtos) {
@@ -350,10 +362,10 @@ public class TeacherFormController implements Initializable {
     }
 
 
-    public void txtEmailAddressOnKeyTyped(KeyEvent keyEvent) {
+    public void txtEmailAddressOnKeyTyped(KeyEvent keyEvent) throws SQLException {
         email = txtEmailAddress.getText();
         btnReset.setDisable(false);
-        ArrayList<TeacherDto> users = teacherModel.getAllTeachers();
+        ArrayList<TeacherDto> users = teacherBO.getAllTeachersAndRelatedGrades();
         ArrayList<String> teacherEmails = new ArrayList<>();
 
         for (TeacherDto teacherDto : users) {
@@ -506,7 +518,7 @@ public class TeacherFormController implements Initializable {
         lblPhoneNumber.setText("");
     }
 
-    private void refreshPage() {
+    private void refreshPage() throws SQLException, ClassNotFoundException {
         cmbSubject.getItems().clear();
         ArrayList<SubjectDto> subjectInformations = subjectModel.getAllSubjects();
 
@@ -515,7 +527,9 @@ public class TeacherFormController implements Initializable {
             cmbSubject.getItems().add(subjectDto.getSubjectName());
         }
 
-        String nextTeacherID = teacherModel.getNextTeacherID();
+//        String nextTeacherID = teacherModel.getNextTeacherID();
+        String nextTeacherID = teacherBO.generateNewID();
+
         lblTeacherID.setText(nextTeacherID);
 
         RegexUtil.resetStyle(txtContactNumber, txtEmailAddress, txtName);

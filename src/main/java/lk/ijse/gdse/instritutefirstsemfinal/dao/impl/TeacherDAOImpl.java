@@ -4,6 +4,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.dao.agreement.TeacherDAO;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Teacher;
 import lk.ijse.gdse.instritutefirstsemfinal.util.CrudUtil;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -51,7 +52,21 @@ public class TeacherDAOImpl implements TeacherDAO {
 
     @Override
     public String generateNewID() throws SQLException, ClassNotFoundException {
-        return "";
+        ResultSet resultSet = CrudUtil.execute(
+                "select t_id from teacher order by t_id desc limit 1"
+        );
+
+        if (resultSet.next()) {
+            String lastId = resultSet.getString(1);
+            String substring = lastId.substring(1);
+            int number = Integer.parseInt(substring);
+            int newId = ++number;
+            return String.format("T%03d", newId);
+
+        }
+
+        return "T001";
+
     }
 
     @Override

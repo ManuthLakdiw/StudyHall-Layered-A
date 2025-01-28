@@ -28,6 +28,13 @@ public class TeacherBOImpl implements TeacherBO {
 
     SubjectDAO subjectDAO = (SubjectDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.SUBJECT);
 
+
+
+    @Override
+    public String generateNewID() throws SQLException, ClassNotFoundException {
+        return teacherDAO.generateNewID();
+    }
+
     @Override
     public ArrayList<TeacherDto> getAllTeachersAndRelatedGrades() throws SQLException {
         ArrayList<TeacherCustom> teacherEntities = queryDAO.getAllTeachersAndRelatedGrades();
@@ -142,6 +149,24 @@ public class TeacherBOImpl implements TeacherBO {
             connection.setAutoCommit(true);
         }
 
+    }
+
+    @Override
+    public boolean deleteTeacher(String teacherId) throws SQLException, ClassNotFoundException {
+        return teacherDAO.delete(teacherId);
+    }
+
+    @Override
+    public boolean getExistsTeachersAndRelatedGrades(TeacherDto teacherDto) throws SQLException {
+        TeacherCustom teacherCustom = new TeacherCustom();
+        teacherCustom.setTeacherId(teacherDto.getTeacherId());
+        teacherCustom.setName(teacherDto.getName());
+        teacherCustom.setPhoneNumber(teacherDto.getPhoneNumber());
+        teacherCustom.setEmail(teacherDto.getEmail());
+        teacherCustom.setSubject(teacherDto.getSubject());
+        teacherCustom.setGrades(teacherDto.getGrades());
+
+        return queryDAO.getExistsTeachersAndRelatedGrades(teacherCustom);
     }
 
 

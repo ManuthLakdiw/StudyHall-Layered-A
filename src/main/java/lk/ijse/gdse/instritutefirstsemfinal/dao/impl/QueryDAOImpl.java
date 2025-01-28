@@ -104,5 +104,41 @@ public class QueryDAOImpl implements QueryDAO {
         return teacherEntities;
     }
 
+    @Override
+    public boolean getExistsTeachersAndRelatedGrades(TeacherCustom teacherCustom) throws SQLException {
+
+        ResultSet resultSet = CrudUtil.execute(
+                "SELECT t.name, t.phone_number, t.email, s.sub_name AS subject, " +
+                        "GROUP_CONCAT(DISTINCT g.grade ORDER BY g.grade) AS grades " +
+                        "FROM teacher AS t " +
+                        "LEFT JOIN subject AS s ON t.subject_id = s.sub_id " +
+                        "LEFT JOIN teacher_grade AS tg ON t.t_id = tg.teacher_id " +
+                        "LEFT JOIN grade AS g ON tg.grade_id = g.g_id " +
+                        "WHERE t.t_id = ? " +
+                        "GROUP BY t.t_id, t.name, t.phone_number, t.email, s.sub_name" ,
+
+                teacherCustom.getTeacherId()
+        );
+
+        if (resultSet.next()) {
+            String currentName = resultSet.getString("name");
+            String currentPhoneNumber = resultSet.getString("phone_number");
+            String currentEmail = resultSet.getString("email");
+            String currentSubject = resultSet.getString("subject");
+            String currentGrades = resultSet.getString("grades");
+
+
+            String gradesString = String.join(",", teacherCustom.getGrades());
+
+            return currentName.equals(teacherCustom.getName()) &&
+                    currentPhoneNumber.equals(teacherCustom.getPhoneNumber()) &&
+                    currentEmail.equals(teacherCustom.getEmail()) &&
+                    currentSubject.equals(teacherCustom.getSubject()) &&
+                    (currentGrades != null && currentGrades.equals(gradesString));
+
+        }
+        return false;
+    }
+
 
 }
