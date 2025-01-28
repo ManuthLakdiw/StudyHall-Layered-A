@@ -38,12 +38,33 @@ public class SubjectGradeDAOImpl implements SubjectGradeDAO {
 
     @Override
     public boolean update(SubjectGrade entity) throws SQLException, ClassNotFoundException {
-        return false;
+        boolean isUpdated = false;
+
+        for (String gradeID : entity.getGradeID()) {
+            boolean result = CrudUtil.execute(
+                    "UPDATE subject_grade SET grade_id = ? WHERE subject_id = ? ",
+                    gradeID,
+                    entity.getSubjectID()
+            );
+
+            if (!result) {
+                return false;
+            } else {
+                isUpdated = true;
+            }
+        }
+
+        return isUpdated;
     }
+
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return false;
+
+        return CrudUtil.execute("DELETE FROM subject_grade WHERE subject_id = ?",
+                id
+
+        );
     }
 
     @Override

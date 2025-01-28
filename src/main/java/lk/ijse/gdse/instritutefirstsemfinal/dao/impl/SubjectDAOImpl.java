@@ -47,7 +47,7 @@ public class SubjectDAOImpl implements SubjectDAO {
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
 
         return CrudUtil.execute(
-                "DELETE FROM subject_grade WHERE subject_id = ?",
+                "DELETE FROM subject WHERE sub_id = ?",
                 id
 
         );

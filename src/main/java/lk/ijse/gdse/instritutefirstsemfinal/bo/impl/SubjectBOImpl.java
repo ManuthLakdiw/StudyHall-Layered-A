@@ -10,6 +10,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.dto.SubjectDto;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Subject;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.SubjectGrade;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.SubjectCustom;
+import lk.ijse.gdse.instritutefirstsemfinal.util.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -93,6 +94,67 @@ public class SubjectBOImpl implements SubjectBO {
         }
     }
 
+    @Override
+    public boolean updateSubject(SubjectDto subjectDto, List<String> gradeIds) throws SQLException, ClassNotFoundException {
+        Connection connection = null;
+
+        try {
+            connection = DBConnection.getInstance().getConnection();
+            connection.setAutoCommit(false);
+
+
+            String[] gradeIdsArray = gradeIds.toArray(new String[0]);
+            SubjectGrade subjectGrade = new SubjectGrade();
+            subjectGrade.setSubjectID(subjectDto.getSubjectId());
+            subjectGrade.setGradeID(gradeIdsArray);
+
+
+            Subject subjectEntity = new Subject();
+
+            subjectEntity.setSubjectName(subjectDto.getSubjectName());
+            subjectEntity.setDescription(subjectDto.getSubjectDescription());
+            subjectEntity.setSubID(subjectDto.getSubjectId());
+
+                if (!subjectDAO.update(subjectEntity)) {
+                    connection.rollback();
+                    return false;
+                }
+
+
+                if (!subjectGradeDAO.delete(subjectDto.getSubjectId())) {
+                    connection.rollback();
+                    return false;
+                }
+
+                if (!subjectGradeDAO.save(subjectGrade)) {
+                    connection.rollback();
+                    return false;
+                }
+
+                connection.commit();
+                return true;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            return false;
+        } finally {
+            if (connection != null) {
+                connection.setAutoCommit(true);
+            }
+        }
+    }
+
+    @Override
+    public boolean deleteSubject(String subjectId) throws SQLException, ClassNotFoundException {
+        return subjectDAO.delete(subjectId);
+    }
+
+    @Override
+    public boolean existsSubjectByName(String subjectName) throws SQLException {
+        return subjectDAO.existsSubjectByName(subjectName);
+    }
 
 
 }

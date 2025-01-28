@@ -104,11 +104,12 @@ public class SubjectFormController implements Initializable {
     //////////////////////////////////// BUTTONS //////////////////////////////////
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) throws SQLException {
+    void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         RegexUtil.resetStyle(txtSubName);
         Optional<ButtonType> buttonType = AlertUtil.ConfirmationAlert("Are you sure you want to delete this Subject?", ButtonType.NO, ButtonType.YES);
         if (buttonType.isPresent() && buttonType.get() == ButtonType.YES) {
-            boolean isDeleted = subjectModel.deleteSubject(lblSubID.getText());
+//            boolean isDeleted = subjectModel.deleteSubject(lblSubID.getText());
+            boolean isDeleted = subjectBO.deleteSubject(lblSubID.getText());
 
             if (isDeleted) {
                 AlertUtil.informationAlert(UserFormController.class, null, true, "Subject deleted successfully.");
@@ -133,7 +134,9 @@ public class SubjectFormController implements Initializable {
         subjectName = txtSubName.getText();
         subjectDescription = tareaDescription.getText();
 
-        boolean isExitedSubName = subjectModel.checkExitingSubject(subjectName);
+//        boolean isExitedSubName = subjectModel.checkExitingSubject(subjectName);
+
+        boolean isExitedSubName = subjectBO.existsSubjectByName(subjectName);
 
         if (isExitedSubName) {
             AlertUtil.informationAlert(UserFormController.class, null, true, "Subject name already exists!");
@@ -178,7 +181,7 @@ public class SubjectFormController implements Initializable {
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) throws SQLException {
+    void btnUpdateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         RegexUtil.resetStyle(txtSubName);
         btnUpdate.setDisable(false);
         subjectName = txtSubName.getText();
@@ -209,6 +212,11 @@ public class SubjectFormController implements Initializable {
                 return;
             }
 
+            if (checkComboBoxGrade.getCheckModel().getCheckedItems().isEmpty()) {
+                AlertUtil.informationAlert(UserFormController.class, null, true, "Grade cannot be empty");
+                return;
+            }
+
             ObservableList<String> selectedItems = checkComboBoxGrade.getCheckModel().getCheckedItems();
             List<String> gradeIds = subjectModel.getGradeIdsFromNames(new ArrayList<>(selectedItems));
 
@@ -221,7 +229,8 @@ public class SubjectFormController implements Initializable {
             SubjectDto updatedSubjectDto = new SubjectDto(subjectId, subjectName, subjectDescription);
 
             // Pass only the grade IDs to update the subject
-             boolean isUpdated = subjectModel.updateSubjectWithGrades(updatedSubjectDto, new ArrayList<>(gradeIds));
+//             boolean isUpdated = subjectModel.updateSubjectWithGrades(updatedSubjectDto, new ArrayList<>(gradeIds));
+             boolean isUpdated = subjectBO.updateSubject(updatedSubjectDto,new ArrayList<>(gradeIds));
             System.out.println(isUpdated);
 
             if (isUpdated) {
