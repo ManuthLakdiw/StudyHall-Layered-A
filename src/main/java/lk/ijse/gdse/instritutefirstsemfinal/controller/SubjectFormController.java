@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.GradeBO;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.SubjectBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.SubjectDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.GradeDto;
@@ -26,10 +27,12 @@ import java.util.*;
 
 public class SubjectFormController implements Initializable {
 
-    SubjectModel subjectModel = new SubjectModel();
-    GradeModel gradeModel = new GradeModel();
+//    SubjectModel subjectModel = new SubjectModel();
+//    GradeModel gradeModel = new GradeModel();
     private SubjectTableFormController tableSubjectFormController;
+
     SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
+    GradeBO gradeBO = (GradeBO) BOFactory.getInstance().getBO(BOFactory.BOType.GRADE);
 
     public void setTblSubjectFormController(SubjectTableFormController tableSubjectFormController) {
         this.tableSubjectFormController = tableSubjectFormController;
@@ -77,7 +80,14 @@ public class SubjectFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ArrayList<GradeDto> grades = gradeModel.getGrades();
+        ArrayList<GradeDto> grades = null;
+        try {
+            grades = gradeBO.getAllGrades();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         ArrayList<String>  items = new ArrayList<>();
 
         for (GradeDto grade : grades) {
@@ -94,7 +104,13 @@ public class SubjectFormController implements Initializable {
         });
 
 
-        refreshPage();
+        try {
+            refreshPage();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -122,12 +138,12 @@ public class SubjectFormController implements Initializable {
     }
 
     @FXML
-    void btnResetOnAction(ActionEvent event) {
+    void btnResetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         refreshPage();
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) throws SQLException {
+    void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         ObservableList<String> selectedItems = checkComboBoxGrade.getCheckModel().getCheckedItems();
 
         subjectId = lblSubID.getText();
@@ -158,7 +174,9 @@ public class SubjectFormController implements Initializable {
         }
 
         if (!btnSave.isDisable()) {
-            List<String> gradeIds = subjectModel.getGradeIdsFromNames(new ArrayList<>(selectedItems));
+//            List<String> gradeIds = subjectModel.getGradeIdsFromNames(new ArrayList<>(selectedItems));
+            List<String> gradeIds = gradeBO.getGradeIdsFromNames(new ArrayList<>(selectedItems));
+
 
             if (gradeIds.isEmpty()) {
                 AlertUtil.informationAlert(UserFormController.class, null, true, "Invalid grade selection.");
@@ -218,7 +236,8 @@ public class SubjectFormController implements Initializable {
             }
 
             ObservableList<String> selectedItems = checkComboBoxGrade.getCheckModel().getCheckedItems();
-            List<String> gradeIds = subjectModel.getGradeIdsFromNames(new ArrayList<>(selectedItems));
+//            List<String> gradeIds = subjectModel.getGradeIdsFromNames(new ArrayList<>(selectedItems));
+            List<String> gradeIds = gradeBO.getGradeIdsFromNames(new ArrayList<>(selectedItems));
 
             if (isValuesUnchanged(subjectId, subjectName, subjectDescription, selectedItems)) {
                 AlertUtil.informationAlert(UserFormController.class, null, true, "No changes detected. Update is not necessary.");
@@ -329,8 +348,9 @@ public class SubjectFormController implements Initializable {
 
     /////////////////////////////
 
-    public void refreshPage(){
-        String nextSubjectID = subjectModel.getNextSubjectID();
+    public void refreshPage() throws SQLException, ClassNotFoundException {
+//        String nextSubjectID = subjectModel.getNextSubjectID();
+        String nextSubjectID = subjectBO.generateNewSubjectID();
         lblSubID.setText(nextSubjectID);
         txtSubName.requestFocus();
         RegexUtil.resetStyle(txtSubName);
@@ -402,9 +422,11 @@ public class SubjectFormController implements Initializable {
 
     /////////////////////////////
 
-    private boolean isValuesUnchanged(String subjectId, String subjectName, String subjectDescription, List<String> gradeIds) {
+    private boolean isValuesUnchanged(String subjectId, String subjectName, String subjectDescription, List<String> gradeIds) throws SQLException {
         // Fetch current subject
-        SubjectDto currentSubject = subjectModel.searchExitingSubjectBySubjectID(subjectId);
+//        SubjectDto currentSubject = subjectModel.searchExitingSubjectBySubjectID(subjectId);
+        SubjectDto currentSubject = subjectBO.getExistsSubjectsAndRelatedGrades(subjectId);
+
 
         if (currentSubject == null) {
             return false;

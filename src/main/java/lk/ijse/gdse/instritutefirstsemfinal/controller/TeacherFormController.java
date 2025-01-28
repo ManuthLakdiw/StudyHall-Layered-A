@@ -8,6 +8,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.TeacherBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.SubjectDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.TeacherDto;
 import lk.ijse.gdse.instritutefirstsemfinal.model.GradeModel;
@@ -18,6 +20,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.util.RegexUtil;
 import org.controlsfx.control.CheckTreeView;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +36,8 @@ public class TeacherFormController implements Initializable {
     public void setTableTeacherFormController(TeacherTableFormController tableTeacherFormController) {
         this.tableTeacherFormController = tableTeacherFormController;
     }
+
+    TeacherBO teacherBO = (TeacherBO) BOFactory.getInstance().getBO(BOFactory.BOType.TEACHER);
 
 
 
@@ -130,7 +135,7 @@ public class TeacherFormController implements Initializable {
     ////////////////////////////////////////////////////////////////////
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
+    void btnDeleteOnAction(ActionEvent event) throws SQLException {
 
         Optional<ButtonType> result = AlertUtil.ConfirmationAlert("Are your sure you want to delete this teacher ["+lblTeacherID.getText()+"]",ButtonType.YES,ButtonType.NO);
 
@@ -148,7 +153,7 @@ public class TeacherFormController implements Initializable {
 
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
+    void btnUpdateOnAction(ActionEvent event) throws SQLException {
         // Step 1: Collect input from UI
         String id = lblTeacherID.getText();
         String name = txtName.getText();
@@ -209,7 +214,7 @@ public class TeacherFormController implements Initializable {
 
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) throws SQLException {
         // Collect teacher details from the form
         id = lblTeacherID.getText();
         name = txtName.getText();

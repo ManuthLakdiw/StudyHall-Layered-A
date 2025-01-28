@@ -16,21 +16,26 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.TeacherBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.TeacherDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.TeacherTm;
 import lk.ijse.gdse.instritutefirstsemfinal.model.TeacherModel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
 public class TeacherTableFormController implements Initializable {
 
-    TeacherModel teacherModel = new TeacherModel();
+//    TeacherModel teacherModel = new TeacherModel();
     TeacherFormController formTeacherController = new TeacherFormController();
     SendMailToTeacherFormController sendMailToTeacherFormController = new SendMailToTeacherFormController();
+
+    TeacherBO teacherBO = (TeacherBO) BOFactory.getInstance().getBO(BOFactory.BOType.TEACHER);
 
     @FXML
     private Pane SubjectPane;
@@ -209,12 +214,16 @@ public class TeacherTableFormController implements Initializable {
 //            };
 //        });
 
-        loadTeacherTable();
+        try {
+            loadTeacherTable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
-    public void loadTeacherTable() {
-        ArrayList<TeacherDto> teacherDtos = teacherModel.getAllTeachers();
+    public void loadTeacherTable() throws SQLException {
+        ArrayList<TeacherDto> teacherDtos = teacherBO.getAllTeachersAndRelatedGrades();
         ObservableList<TeacherTm> teacherTms = FXCollections.observableArrayList();
 
         if (teacherDtos != null) {

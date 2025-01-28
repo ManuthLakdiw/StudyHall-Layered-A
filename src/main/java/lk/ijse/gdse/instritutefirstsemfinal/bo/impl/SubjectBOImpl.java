@@ -42,6 +42,11 @@ public class SubjectBOImpl implements SubjectBO {
     }
 
     @Override
+    public String generateNewSubjectID() throws SQLException, ClassNotFoundException {
+        return subjectDAO.generateNewID();
+    }
+
+    @Override
     public boolean saveSubject(SubjectDto subjectDto, List<String> gradeIds) throws SQLException {
         Connection connection = null;
 
@@ -154,6 +159,18 @@ public class SubjectBOImpl implements SubjectBO {
     @Override
     public boolean existsSubjectByName(String subjectName) throws SQLException {
         return subjectDAO.existsSubjectByName(subjectName);
+    }
+
+    @Override
+    public SubjectDto getExistsSubjectsAndRelatedGrades(String subjectID) throws SQLException {
+        SubjectCustom subjectCustom =  queryDAO.getExistsSubjectsAndRelatedGrades(subjectID);
+        SubjectDto subjectDto = new SubjectDto();
+        subjectDto.setSubjectId(subjectCustom.getSubjectId());
+        subjectDto.setSubjectName(subjectCustom.getSubjectName());
+        subjectDto.setSubjectGrades(subjectCustom.getSubjectGrades());
+        subjectDto.setSubjectDescription(subjectCustom.getSubjectDescription());
+        return subjectDto;
+
     }
 
 

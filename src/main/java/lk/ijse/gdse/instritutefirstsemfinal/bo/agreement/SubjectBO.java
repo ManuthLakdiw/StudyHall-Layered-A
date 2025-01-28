@@ -11,9 +11,11 @@ import java.util.List;
 public interface SubjectBO extends SuperBO {
 
     ArrayList<SubjectDto> getAllSubjectsAndRelatedGrades() throws SQLException;
-
+    String generateNewSubjectID() throws SQLException , ClassNotFoundException;
     boolean saveSubject(SubjectDto subjectDto, List<String> gradeIds) throws SQLException;
     boolean updateSubject(SubjectDto subjectDto , List<String> gradeIds) throws SQLException, ClassNotFoundException;
     boolean deleteSubject(String subjectId) throws SQLException, ClassNotFoundException;
     boolean existsSubjectByName(String subjectName) throws SQLException;
+    SubjectDto getExistsSubjectsAndRelatedGrades(String subjectID) throws SQLException;
+
 }

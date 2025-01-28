@@ -3,6 +3,7 @@ package lk.ijse.gdse.instritutefirstsemfinal.dao.impl;
 import lk.ijse.gdse.instritutefirstsemfinal.dao.QueryDAO;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Subject;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.SubjectCustom;
+import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.TeacherCustom;
 import lk.ijse.gdse.instritutefirstsemfinal.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -66,4 +67,42 @@ public class QueryDAOImpl implements QueryDAO {
         return null;
 
     }
+
+    @Override
+    public ArrayList<TeacherCustom> getAllTeachersAndRelatedGrades() throws SQLException {
+        ArrayList<TeacherCustom> teacherEntities = new ArrayList<>();
+        ResultSet resultSet = CrudUtil.execute(
+
+                "SELECT t.t_id, t.name, t.phone_number, t.email, s.sub_name AS subject, " +
+                        "GROUP_CONCAT(DISTINCT g.grade ORDER BY g.grade) AS grades " +
+                        "FROM teacher AS t " +
+                        "LEFT JOIN subject AS s ON t.subject_id = s.sub_id " +
+                        "LEFT JOIN teacher_grade AS tg ON t.t_id = tg.teacher_id " +
+                        "LEFT JOIN grade AS g ON tg.grade_id = g.g_id " +
+                        "GROUP BY t.t_id, t.name, t.phone_number, t.email, s.sub_name " +
+                        "ORDER BY t.t_id"
+        );
+
+        while (resultSet.next()) {
+
+            String subject = resultSet.getString("subject");
+
+            String[] gradeArray = resultSet.getString("grades") != null
+                    ? resultSet.getString("grades").split(",")
+                    : new String[0];
+
+            TeacherCustom teacherEntity = new TeacherCustom(
+                    resultSet.getString("t_id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("phone_number"),
+                    resultSet.getString("email"),
+                    subject,
+                    gradeArray
+            );
+            teacherEntities.add(teacherEntity);
+        }
+        return teacherEntities;
+    }
+
+
 }

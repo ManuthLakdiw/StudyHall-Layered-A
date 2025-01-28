@@ -34,7 +34,7 @@ import java.util.function.Predicate;
 
 public class SubjectTableFormController implements Initializable {
 
-    SubjectModel model = new SubjectModel();
+//    SubjectModel model = new SubjectModel();
     SubjectFormController subjectFormController = new SubjectFormController();
     SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
 
@@ -100,7 +100,7 @@ public class SubjectTableFormController implements Initializable {
     }
 
     @FXML
-    private void tblSubjectOnClicked(MouseEvent event) throws SQLException {
+    private void tblSubjectOnClicked(MouseEvent event) throws SQLException, ClassNotFoundException {
         SubjectTm isSelected = tblSubject.getSelectionModel().getSelectedItem();
         if (isButtonClicked){
             if (isSelected != null) {
@@ -129,7 +129,8 @@ public class SubjectTableFormController implements Initializable {
                     Optional<ButtonType> confirmDelete = AlertUtil.ConfirmationAlert("Are you sure!", ButtonType.YES, ButtonType.NO);
                     if (confirmDelete.isPresent()) {
                         if (confirmDelete.get() == ButtonType.YES) {
-                            boolean isDeleted = model.deleteSubject(isSelected.getSubjectId());
+//                            boolean isDeleted = model.deleteSubject(isSelected.getSubjectId());
+                            boolean isDeleted = subjectBO.deleteSubject(isSelected.getSubjectId());
                             if (isDeleted) {
                                 AlertUtil.informationAlert(UserFormController.class,null,true,"User deleted successfully");
                                 loadSubjectTable();

@@ -1,9 +1,6 @@
 package lk.ijse.gdse.instritutefirstsemfinal.dao;
 
-import lk.ijse.gdse.instritutefirstsemfinal.dao.impl.QueryDAOImpl;
-import lk.ijse.gdse.instritutefirstsemfinal.dao.impl.SubjectDAOImpl;
-import lk.ijse.gdse.instritutefirstsemfinal.dao.impl.SubjectGradeDAOImpl;
-import lk.ijse.gdse.instritutefirstsemfinal.dao.impl.UserDAOImpl;
+import lk.ijse.gdse.instritutefirstsemfinal.dao.impl.*;
 
 public class DAOFactory {
 
@@ -20,7 +17,7 @@ public class DAOFactory {
     }
 
     public enum DAOType {
-        USER , QUERY , SUBJECT , SUBJECTGRADE
+        USER , QUERY , SUBJECT , SUBJECTGRADE ,GRADE , TEACHER
     }
 
     public SuperDAO getDAO(DAOType daoType) {
@@ -29,6 +26,8 @@ public class DAOFactory {
             case QUERY -> new QueryDAOImpl();
             case SUBJECT -> new SubjectDAOImpl();
             case SUBJECTGRADE -> new SubjectGradeDAOImpl();
+            case GRADE -> new GradeDAOImpl();
+            case TEACHER -> new TeacherDAOImpl();
 
             default -> null;
         };
