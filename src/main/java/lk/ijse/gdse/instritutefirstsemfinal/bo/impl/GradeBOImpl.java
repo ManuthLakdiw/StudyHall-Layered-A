@@ -21,6 +21,11 @@ public class GradeBOImpl implements GradeBO {
     }
 
     @Override
+    public String getGradeIdFromName(String grade) throws SQLException {
+        return gradeDAO.getGradeIdFromName(grade);
+    }
+
+    @Override
     public ArrayList<GradeDto> getAllGrades() throws SQLException, ClassNotFoundException {
         ArrayList<GradeDto> grades = new ArrayList<>();
         ArrayList<Grade> allGrades = gradeDAO.getAll();

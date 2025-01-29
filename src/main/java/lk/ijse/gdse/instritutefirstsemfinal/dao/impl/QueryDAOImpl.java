@@ -284,5 +284,26 @@ public class QueryDAOImpl implements QueryDAO {
             return studentCustoms;
     }
 
+    @Override
+    public ArrayList<String> getSubjectsDetailsByGradeID(String gradeId) throws SQLException {
+        ArrayList<String> subjects = new ArrayList<>();
+
+        ResultSet resultSet = CrudUtil.execute(
+                "SELECT subject.sub_name FROM subject JOIN" +
+                        " subject_grade ON subject.sub_id = subject_grade.subject_id" +
+                        " WHERE subject_grade.grade_id = ?" ,
+
+                gradeId
+
+        );
+
+        while (resultSet.next()) {
+            subjects.add(resultSet.getString("sub_name"));
+        }
+
+        return subjects;
+
+    }
+
 
 }

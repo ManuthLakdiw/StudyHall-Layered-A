@@ -17,7 +17,8 @@ public class DAOFactory {
     }
 
     public enum DAOType {
-        USER , QUERY , SUBJECT , SUBJECT_GRADE, GRADE , TEACHER , TEACHER_GRADE , STUDENT
+        USER , QUERY , SUBJECT , SUBJECT_GRADE, GRADE , TEACHER , TEACHER_GRADE , STUDENT ,
+        STUDENT_SUBJECT
     }
 
     public SuperDAO getDAO(DAOType daoType) {
@@ -30,6 +31,7 @@ public class DAOFactory {
             case TEACHER -> new TeacherDAOImpl();
             case TEACHER_GRADE -> new TeacherGradeDAOImpl();
             case STUDENT -> new StudentDAOImpl();
+            case STUDENT_SUBJECT -> new StudentSubjectDAOImpl();
 
             default -> null;
         };

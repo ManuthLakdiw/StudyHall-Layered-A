@@ -27,4 +27,6 @@ public interface QueryDAO extends SuperDAO {
 
     ArrayList<StudentCustom> getStudentAllDetailsByID(String studentId) throws SQLException;
 
+    ArrayList<String> getSubjectsDetailsByGradeID(String gradeId) throws SQLException;
+
 }

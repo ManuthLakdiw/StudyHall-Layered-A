@@ -9,7 +9,12 @@
         import javafx.scene.control.*;
         import javafx.scene.input.KeyCode;
         import javafx.scene.input.KeyEvent;
+        import javafx.scene.input.MouseEvent;
         import javafx.scene.layout.Pane;
+        import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+        import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.GradeBO;
+        import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.StudentBO;
+        import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.SubjectBO;
         import lk.ijse.gdse.instritutefirstsemfinal.dto.GradeDto;
         import lk.ijse.gdse.instritutefirstsemfinal.dto.StudentDto;
         import lk.ijse.gdse.instritutefirstsemfinal.model.GradeModel;
@@ -27,9 +32,14 @@
         public class StudentFormController implements Initializable {
 
             private StudentTableFormController studentTableFormController;
-            StudentModel studentModel = new StudentModel();
-            GradeModel gradeModel = new GradeModel();
-            SubjectModel subjectModel = new SubjectModel();
+
+//            StudentModel studentModel = new StudentModel();
+//            GradeModel gradeModel = new GradeModel();
+//            SubjectModel subjectModel = new SubjectModel();
+
+            StudentBO studentBO = (StudentBO) BOFactory.getInstance().getBO(BOFactory.BOType.STUDENT);
+            GradeBO gradeBO = (GradeBO) BOFactory.getInstance().getBO(BOFactory.BOType.GRADE);
+            SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
 
             public void setStudentTableFormController(StudentTableFormController studentTableFormController) {
                 this.studentTableFormController = studentTableFormController;
@@ -37,6 +47,10 @@
 
             @FXML
             private Pane StudentPane;
+
+
+            @FXML
+            private Label lblClear;
 
             @FXML
             private Button btnDelete;
@@ -106,7 +120,13 @@
 
             @Override
             public void initialize(URL url, ResourceBundle resourceBundle) {
-                refreshPage();
+                try {
+                    refreshPage();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
 
                 cmbGrade.valueProperty().addListener((observable, oldValue, newValue) -> {
                     isSaveEnabled();
@@ -153,11 +173,12 @@
             ///////////////////////////// BUTTONS ///////////////////////////////////
 
             @FXML
-            void btnDeleteOnAction(ActionEvent event) throws SQLException {
+            void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
                 Optional<ButtonType> buttonType = AlertUtil.ConfirmationAlert("Are you sure you want to delete this Student?", ButtonType.NO, ButtonType.YES);
                 if (buttonType.isPresent() && buttonType.get() == ButtonType.YES) {
-                    boolean isDeleted = studentModel.deleteStudent(lblStudentID.getText());
+//                    boolean isDeleted = studentModel.deleteStudent(lblStudentID.getText());
+                    boolean isDeleted = studentBO.deleteStudent(lblStudentID.getText());
 
                     if (isDeleted) {
                         AlertUtil.informationAlert(UserFormController.class, null, true, "Student deleted successfully.");
@@ -170,12 +191,12 @@
             }
 
             @FXML
-            void btnResetOnAction(ActionEvent event) {
+            void btnResetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
                 refreshPage();
             }
 
             @FXML
-            void btnSaveOnAction(ActionEvent event) throws SQLException {
+            void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
                 String id = lblStudentID.getText();
                 LocalDate birthday = dpDOB.getValue();
                 String name = txtName.getText();
@@ -209,7 +230,7 @@
                 }
 
                 // Get subject IDs
-                List<String> subjectIds = subjectModel.getSubjectIdsFromNames(new ArrayList<>(selectedItems));
+                List<String> subjectIds = subjectBO.getSubjectIDsFromName(new ArrayList<>(selectedItems));
                 if (subjectIds.isEmpty()) {
                     AlertUtil.informationAlert(this.getClass(), null, true, "Invalid subject selection.");
                     return;
@@ -218,12 +239,15 @@
 
                 String[] subjectArray = subjectIds.toArray(new String[0]);
 
-                String gradeID = gradeModel.getGradeIdFromName(grade);
+//                String gradeID = gradeModel.getGradeIdFromName(grade);
+                String gradeID = gradeBO.getGradeIdFromName(grade);
+
 
                 StudentDto studentDto = new StudentDto(id, birthday, name, fee, parentName, email, phoneNumber, address, admin, gradeID, subjectArray);
 
 
-                boolean isSaved = studentModel.saveStudent(studentDto, subjectIds);
+//                boolean isSaved = studentModel.saveStudent(studentDto, subjectIds);
+                boolean isSaved = studentBO.saveStudent(studentDto,subjectIds);
 
                 if (isSaved) {
                     AlertUtil.informationAlert(this.getClass(), null, true, "Student Saved Successfully!");
@@ -235,7 +259,7 @@
             }
 
             @FXML
-            void btnUpdateOnAction(ActionEvent event) throws SQLException {
+            void btnUpdateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
                 String id = lblStudentID.getText();
                 LocalDate birthday = dpDOB.getValue();
                 String name = txtName.getText();
@@ -266,7 +290,7 @@
                     return;
                 }
 
-                List<String> subjectIds = subjectModel.getSubjectIdsFromNames(new ArrayList<>(selectedItems));
+                List<String> subjectIds = subjectBO.getSubjectIDsFromName(new ArrayList<>(selectedItems));
                 if (subjectIds.isEmpty()) {
                     AlertUtil.informationAlert(this.getClass(), null, true, "Invalid subject selection.");
                     return;
@@ -274,11 +298,14 @@
 
                 String[] subjectArray = subjectIds.toArray(new String[0]);
 
-                String gradeID = gradeModel.getGradeIdFromName(grade);
+//                String gradeID = gradeModel.getGradeIdFromName(grade);
+                String gradeID = gradeBO.getGradeIdFromName(grade);
 
                 StudentDto studentDto = new StudentDto(id, birthday, name, fee, parentName, email, phoneNumber, address, admin, gradeID, subjectArray);
 
-                ArrayList<StudentDto> students = studentModel.getStudentsById(lblStudentID.getText());
+//                ArrayList<StudentDto> students = studentModel.getStudentsById(lblStudentID.getText());
+                ArrayList<StudentDto> students = studentBO.getStudentAllDetailsByID(lblStudentID.getText());
+
 
                 for (StudentDto studentDto1 : students) {
                     boolean isSameGrade = studentDto1.getGrade().equals(grade);
@@ -297,7 +324,8 @@
                     }
                 }
 
-                boolean isUpdated = studentModel.updateStudent(studentDto, subjectIds);
+//                boolean isUpdated = studentModel.updateStudent(studentDto, subjectIds);
+                boolean isUpdated = studentBO.UpdateStudent(studentDto, subjectIds);
 
                 if (isUpdated) {
                     AlertUtil.informationAlert(this.getClass(), null, true, "Student Updated Successfully!");
@@ -325,7 +353,7 @@
 
             /////////////////////////////
             @FXML
-            void cmbGradeOnAction(ActionEvent event) {
+            void cmbGradeOnAction(ActionEvent event) throws SQLException {
                 String selectedGrade = cmbGrade.getSelectionModel().getSelectedItem();
                 if (selectedGrade != null && !selectedGrade.isEmpty()) {
                     grade = selectedGrade;
@@ -333,8 +361,9 @@
                     btnReset.setDisable(false);
 
                     checkCBoxSubject.getItems().clear();
-                    String gradeID = gradeModel.getGradeIdFromName(selectedGrade);
-                    ArrayList<String> subjects = gradeModel.getSubjectsByGradeId(gradeID);
+                    String gradeID = gradeBO.getGradeIdFromName(selectedGrade);
+                    ArrayList<String> subjects = subjectBO.getSubjectsDetailsByGradeID(gradeID);
+//                    checkCBoxSubject.getCheckModel().clearChecks();
 
                     if (subjects != null) {
                         checkCBoxSubject.getItems().addAll(subjects);
@@ -602,8 +631,8 @@
 
 
             /////////////////////////////
-            public void refreshPage() {
-                String studentID = studentModel.getNextStudentID();
+            public void refreshPage() throws SQLException, ClassNotFoundException {
+                String studentID = studentBO.generateNewStudentID();
                 lblStudentID.setText(studentID);
 
 
@@ -611,7 +640,7 @@
               checkCBoxSubject.getCheckModel().clearChecks();
                 checkCBoxSubject.getItems().clear();
 
-                ArrayList<GradeDto> grades = gradeModel.getGrades();
+                ArrayList<GradeDto> grades = gradeBO.getAllGrades();
                 cmbGrade.getItems().clear();
                 if (grades != null && !grades.isEmpty()) {
                     for (GradeDto grade : grades) {
@@ -649,7 +678,7 @@
                 btnUpdate.setDisable(true);
             }
 
-            public void setStudentDto(StudentDto studentDto) {
+            public void setStudentDto(StudentDto studentDto) throws SQLException {
                 lblStudentID.setText(studentDto.getId());
                 txtName.setText(studentDto.getName());
                 txtEmail.setText(studentDto.getEmail());
@@ -660,9 +689,9 @@
                 cmbGrade.setValue(studentDto.getGrade());
                 txtParentName.setText(studentDto.getParentName());
 
-                String gradeID = gradeModel.getGradeIdFromName(studentDto.getGrade());
+                String gradeID = gradeBO.getGradeIdFromName(studentDto.getGrade());
 
-                ArrayList<String> subjects = gradeModel.getSubjectsByGradeId(gradeID);
+                ArrayList<String> subjects = subjectBO.getSubjectsDetailsByGradeID(gradeID);
 
                 checkCBoxSubject.getItems().clear();
                 if (subjects != null) {
@@ -742,6 +771,14 @@
             }
 
 
+            @FXML
+            public void lblClearOnMouseClicked(MouseEvent mouseEvent) {
+
+                if (!checkCBoxSubject.getCheckModel().getCheckedItems().isEmpty()) {
+                    checkCBoxSubject.getCheckModel().clearChecks();
+                }
+
+            }
         }
 
 

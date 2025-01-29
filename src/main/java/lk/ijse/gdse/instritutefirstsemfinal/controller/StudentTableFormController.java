@@ -148,7 +148,11 @@ public class StudentTableFormController implements Initializable {
 
 
                 if (dto != null) {
-                    studentFormController.setStudentDto(dto);
+                    try {
+                        studentFormController.setStudentDto(dto);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     studentFormController.tableClickButton();
                 }
             }

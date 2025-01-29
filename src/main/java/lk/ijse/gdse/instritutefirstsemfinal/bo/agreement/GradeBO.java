@@ -11,5 +11,6 @@ import java.util.List;
 public interface GradeBO extends SuperBO {
 
     List<String> getGradeIdsFromNames(List<String> gradeNames) throws SQLException;
+    String getGradeIdFromName(String grade) throws SQLException;
     ArrayList<GradeDto> getAllGrades() throws SQLException, ClassNotFoundException;
 }

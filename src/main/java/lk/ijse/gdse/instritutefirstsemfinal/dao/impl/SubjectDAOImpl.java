@@ -120,7 +120,18 @@ public class SubjectDAOImpl implements SubjectDAO {
 
     @Override
     public List<String> getSubjectIDsFromName(List<String> subjectNames) throws SQLException {
-        return List.of();
+        List<String> subjectIds = new ArrayList<>();
+
+        SubjectDAO subjectDAO = new SubjectDAOImpl();
+
+        for (String subjectName : subjectNames) {
+            String subjectId = subjectDAO.getSubjectIDFromName(subjectName);
+            if (subjectId != null) {
+                subjectIds.add(subjectId);
+            }
+        }
+
+        return subjectIds;
     }
 
 //    @Override

@@ -177,5 +177,15 @@ public class SubjectBOImpl implements SubjectBO {
         return queryDAO.getGradesForSubject(subjectName);
     }
 
+    @Override
+    public ArrayList<String> getSubjectsDetailsByGradeID(String gradeId) throws SQLException {
+        return queryDAO.getSubjectsDetailsByGradeID(gradeId);
+    }
+
+    @Override
+    public List<String> getSubjectIDsFromName(List<String> subjectNames) throws SQLException {
+        return subjectDAO.getSubjectIDsFromName(subjectNames);
+    }
+
 
 }

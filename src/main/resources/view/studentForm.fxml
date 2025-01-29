@@ -287,5 +287,10 @@
                </font></Label>
          </children>
       </HBox>
+      <Label fx:id="lblClear" alignment="CENTER_RIGHT" layoutX="689.0" layoutY="383.0" onMouseClicked="#lblClearOnMouseClicked" prefHeight="17.0" prefWidth="103.0" style="-fx-background-color: transparent;" styleClass="lblClear" stylesheets="@../assets/style/Style.css" text="Clear checks">
+         <font>
+            <Font name="Arial Bold" size="10.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
