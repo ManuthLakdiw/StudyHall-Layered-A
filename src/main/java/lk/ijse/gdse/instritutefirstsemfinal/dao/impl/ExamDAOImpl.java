@@ -94,4 +94,33 @@ public class ExamDAOImpl implements ExamDAO {
     public Exam search(String id) throws SQLException, ClassNotFoundException {
         return null;
     }
+
+    @Override
+    public String[] getExamIDsUsingSubject(String subject) throws SQLException {
+        ArrayList<String> examIDs = new ArrayList<>();
+
+        ResultSet resultSet = CrudUtil.execute(
+                "select exam_id from exam where subject_id = ? ",
+                subject
+        );
+
+        while (resultSet.next()) {
+            examIDs.add(resultSet.getString(1));
+        }
+
+        return examIDs.toArray(new String[examIDs.size()]);
+
+    }
+
+    @Override
+    public int getExamCount() throws SQLException {
+        ResultSet resultSet = CrudUtil.execute(
+                "SELECT COUNT(*) FROM exam"
+        );
+
+        if (resultSet.next()) {
+            return resultSet.getInt(1);
+        }
+        return 0;
+    }
 }

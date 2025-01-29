@@ -19,7 +19,7 @@ public class BOFactory {
 
 
     public enum BOType{
-        USER , SUBJECT , GRADE , TEACHER , STUDENT
+        USER , SUBJECT , GRADE , TEACHER , STUDENT , EXAM
     }
 
     public SuperBO getBO(BOType boType){
@@ -29,6 +29,7 @@ public class BOFactory {
             case GRADE -> new GradeBOImpl();
             case TEACHER -> new TeacherBOImpl();
             case STUDENT -> new StudentBOImpl();
+            case EXAM -> new ExamBOImpl();
 
             default -> null;
         };

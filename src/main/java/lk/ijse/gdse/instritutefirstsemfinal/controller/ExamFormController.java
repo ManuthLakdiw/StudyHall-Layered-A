@@ -8,6 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.ExamBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.GradeDto;
 import lk.ijse.gdse.instritutefirstsemfinal.model.ExamModel;
@@ -17,6 +19,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
 
 import java.lang.reflect.Array;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +33,8 @@ public class ExamFormController implements Initializable {
     ExamModel examModel = new ExamModel();
     GradeModel gradeModel = new GradeModel();
     SubjectModel subjectModel = new SubjectModel();
+
+    ExamBO examBO = (ExamBO) BOFactory.getInstance().getBO(BOFactory.BOType.EXAM);
 
     public void setExamTableFormController(ExamTableFormController examTableFormController) {
         this.examTableFormController = examTableFormController;
@@ -81,7 +86,7 @@ public class ExamFormController implements Initializable {
 
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
+    void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         id = lblExamID.getText();
 
         Optional<ButtonType> buttonType = AlertUtil.ConfirmationAlert("Are you sure Do want to delete this exam schedule",ButtonType.NO,ButtonType.YES);
@@ -102,13 +107,13 @@ public class ExamFormController implements Initializable {
     }
 
     @FXML
-    void btnResetOnAction(ActionEvent event) {
+    void btnResetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         refreshPage();
 
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         id = lblExamID.getText();
         subject = cmbSubject.getValue();
         type = cmbExamType.getValue();
@@ -155,7 +160,7 @@ public class ExamFormController implements Initializable {
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
+    void btnUpdateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         // Get the values from the UI components
         id = lblExamID.getText();
         subject = cmbSubject.getValue();
@@ -299,7 +304,13 @@ public class ExamFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        refreshPage();
+        try {
+            refreshPage();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         cmbGrade.valueProperty().addListener((observable, oldValue, newValue) -> {
             idSaveEnable();
@@ -333,9 +344,9 @@ public class ExamFormController implements Initializable {
     }
 
 
-    public void refreshPage(){
+    public void refreshPage() throws SQLException, ClassNotFoundException {
         btnSave.setVisible(true);
-        String nextExamID = examModel.getNextExamID();
+        String nextExamID = examBO.generateNewExamID();
         lblExamID.setText(nextExamID);
         tareaBody.clear();
 
