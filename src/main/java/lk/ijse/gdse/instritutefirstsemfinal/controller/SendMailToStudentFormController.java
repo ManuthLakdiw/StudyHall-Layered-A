@@ -10,6 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.StudentBO;
+import lk.ijse.gdse.instritutefirstsemfinal.dao.QueryDAO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.StudentDto;
 import lk.ijse.gdse.instritutefirstsemfinal.model.StudentModel;
 import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
@@ -18,15 +21,19 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class SendMailToStudentFormController implements Initializable {
 
-    StudentModel studentModel = new StudentModel();
+//    StudentModel studentModel = new StudentModel();
 
     private StudentOtherInfoTableFormController studentOtherInfoTableFormController;
+
+    StudentBO studentBO = (StudentBO) BOFactory.getInstance().getBO(BOFactory.BOType.STUDENT);
+
 
     @FXML
     private Button btnSend;
@@ -93,6 +100,7 @@ public class SendMailToStudentFormController implements Initializable {
             Transport.send(message);
 
             AlertUtil.informationAlert(SendMailToTeacherFormController.class,null,true,"Mail sent successfully");
+            System.out.println(studentEmail);
             cmbStudentID.getSelectionModel().clearSelection();
             lblGmail.setText("");
             txtSubject.setText("");
@@ -106,10 +114,10 @@ public class SendMailToStudentFormController implements Initializable {
     }
 
     @FXML
-    void cmbStudentIDOnAction(ActionEvent event) {
+    void cmbStudentIDOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String studentID = cmbStudentID.getSelectionModel().getSelectedItem();
 
-        ArrayList<StudentDto> students = studentModel.getStudentsById(studentID);
+        ArrayList<StudentDto> students = studentBO.getStudentAllDetailsByID(studentID);
 
         for (StudentDto studentDto : students) {
             studentEmail = studentDto.getEmail();
@@ -126,7 +134,12 @@ public class SendMailToStudentFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cmbStudentID.requestFocus();
-        ArrayList<StudentDto> students = studentModel.getAllStudents();
+        ArrayList<StudentDto> students = null;
+        try {
+            students = studentBO.getAllStudentsWithLearnSubjects();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
         for (StudentDto student : students) {
