@@ -1,6 +1,7 @@
 package lk.ijse.gdse.instritutefirstsemfinal.dao.impl;
 
 import lk.ijse.gdse.instritutefirstsemfinal.dao.agreement.ExamDAO;
+import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Exam;
 import lk.ijse.gdse.instritutefirstsemfinal.util.CrudUtil;
 
@@ -55,20 +56,6 @@ public class ExamDAOImpl implements ExamDAO {
 
     @Override
     public Exam exist(String id) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute(
-                "select * from exam where exam_id = ?",
-                id
-        );
-        if (resultSet.next()) {
-            return new Exam(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getDate(4).toLocalDate(),
-                    resultSet.getString(5),
-                    resultSet.getString(6)
-            );
-        }
         return null;
     }
 
@@ -122,5 +109,29 @@ public class ExamDAOImpl implements ExamDAO {
             return resultSet.getInt(1);
         }
         return 0;
+    }
+
+    @Override
+    public ArrayList<Exam> ExistExam(String examID) throws SQLException {
+        ArrayList<Exam> exams = new ArrayList<>();
+
+        ResultSet resultSet = CrudUtil.execute(
+                "select * from exam where exam_id = ?",
+                examID
+        );
+
+        if (resultSet.next()) {
+            Exam exam = new Exam(
+                    resultSet.getString(1),
+                    resultSet.getString(6),
+                    resultSet.getString(2),
+                    resultSet.getDate(4).toLocalDate(),
+                    resultSet.getString(3),
+                    resultSet.getString(5)
+            );
+            exams.add(exam);
+        }
+        return exams;
+
     }
 }

@@ -13,10 +13,10 @@ import java.time.LocalDate;
 
 public class Exam {
     private String examId;
-    private String subject;
-    private String examType;
-    private LocalDate examDate;
-    private String description;
     private String grade;
+    private String subject;
+    private LocalDate examDate;
+    private String examType;
+    private String description;
 
 }

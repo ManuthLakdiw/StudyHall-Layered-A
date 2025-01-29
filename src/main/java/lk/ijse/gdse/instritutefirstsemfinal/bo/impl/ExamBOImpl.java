@@ -2,19 +2,43 @@ package lk.ijse.gdse.instritutefirstsemfinal.bo.impl;
 
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.ExamBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dao.DAOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.dao.QueryDAO;
 import lk.ijse.gdse.instritutefirstsemfinal.dao.agreement.ExamDAO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Exam;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ExamBOImpl implements ExamBO {
 
     ExamDAO examDAO = (ExamDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.EXAM);
 
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.QUERY);
+
     @Override
     public String generateNewExamID() throws SQLException, ClassNotFoundException {
         return examDAO.generateNewID();
+    }
+
+    @Override
+    public ArrayList<ExamDto> getAllExamsAndApplicableSubjectNames() throws SQLException {
+        ArrayList<ExamDto> examDtos = new ArrayList<>();
+        ArrayList<Exam> examEntities = queryDAO.getAllExamsAndApplicableSubjectNames();
+
+        for (Exam exam : examEntities) {
+            ExamDto examDto = new ExamDto();
+
+            examDto.setExamId(exam.getExamId());
+            examDto.setSubject(exam.getSubject());
+            examDto.setExamDate(exam.getExamDate());
+            examDto.setExamDescription(exam.getDescription());
+            examDto.setExamType(exam.getExamType());
+            examDto.setGrade(exam.getGrade());
+            examDtos.add(examDto);
+        }
+
+        return examDtos;
     }
 
     @Override
@@ -46,7 +70,7 @@ public class ExamBOImpl implements ExamBO {
     }
 
     @Override
-    public boolean delete(String id) throws SQLException, ClassNotFoundException {
+    public boolean deleteExam(String id) throws SQLException, ClassNotFoundException {
         return examDAO.delete(id);
     }
 
@@ -59,6 +83,27 @@ public class ExamBOImpl implements ExamBO {
     public int getExamCount() throws SQLException {
         return examDAO.getExamCount();
     }
+
+    @Override
+    public ArrayList<ExamDto> ExistExam(String examID) throws SQLException {
+        ArrayList<ExamDto> examDtos = new ArrayList<>();
+        ArrayList<Exam> examEntities = examDAO.ExistExam(examID);
+
+        for (Exam exam : examEntities) {
+            ExamDto examDto = new ExamDto();
+            examDto.setExamId(exam.getExamId());
+            examDto.setSubject(exam.getSubject());
+            examDto.setExamDate(exam.getExamDate());
+            examDto.setExamDescription(exam.getDescription());
+            examDto.setExamType(exam.getExamType());
+            examDto.setGrade(exam.getGrade());
+            examDtos.add(examDto);
+        }
+        return examDtos;
+
+    }
+
+
 
 
 }

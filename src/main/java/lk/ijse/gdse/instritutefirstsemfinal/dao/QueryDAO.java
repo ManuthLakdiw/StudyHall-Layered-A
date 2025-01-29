@@ -30,7 +30,7 @@ public interface QueryDAO extends SuperDAO {
 
     ArrayList<String> getSubjectsDetailsByGradeID(String gradeId) throws SQLException;
 
-    ArrayList<Exam> getAllExamsAndApplicableSubjects() throws SQLException;
+    ArrayList<Exam> getAllExamsAndApplicableSubjectNames() throws SQLException;
 
     Exam getNextUpCommingExam() throws SQLException;
 

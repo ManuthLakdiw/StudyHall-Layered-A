@@ -183,6 +183,11 @@ public class SubjectBOImpl implements SubjectBO {
     }
 
     @Override
+    public String getSubjectIDFromName(String subjectName) throws SQLException {
+        return subjectDAO.getSubjectIDFromName(subjectName);
+    }
+
+    @Override
     public List<String> getSubjectIDsFromName(List<String> subjectNames) throws SQLException {
         return subjectDAO.getSubjectIDsFromName(subjectNames);
     }

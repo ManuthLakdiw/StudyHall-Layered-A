@@ -1,7 +1,6 @@
 package lk.ijse.gdse.instritutefirstsemfinal.dao.impl;
 
 import lk.ijse.gdse.instritutefirstsemfinal.dao.QueryDAO;
-import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Exam;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.StudentCustom;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.SubjectCustom;
@@ -306,7 +305,7 @@ public class QueryDAOImpl implements QueryDAO {
     }
 
     @Override
-    public ArrayList<Exam> getAllExamsAndApplicableSubjects() throws SQLException {
+    public ArrayList<Exam> getAllExamsAndApplicableSubjectNames() throws SQLException {
         ArrayList<Exam> examEntities = new ArrayList<>();
 
         ResultSet resultSet = CrudUtil.execute(

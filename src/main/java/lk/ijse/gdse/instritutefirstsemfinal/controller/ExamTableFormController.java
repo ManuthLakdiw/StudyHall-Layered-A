@@ -19,6 +19,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.ExamBO;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.impl.ExamBOImpl;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.ExamTm;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.StudentTm;
@@ -26,6 +29,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.model.ExamModel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -35,7 +39,9 @@ public class ExamTableFormController implements Initializable {
 
     ExamFormController examFormController = new ExamFormController();
 
-    ExamModel examModel = new ExamModel();
+//    ExamModel examModel = new ExamModel();
+
+    ExamBO examBO = (ExamBO) BOFactory.getInstance().getBO(BOFactory.BOType.EXAM);
 
     @FXML
     private Pane AdminPane;
@@ -118,7 +124,11 @@ public class ExamTableFormController implements Initializable {
                     isSelected.getExamDescription()
             );
 
-            examFormController.setDto(examDto);
+            try {
+                examFormController.setDto(examDto);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             examFormController.buttonAction();
         }
 
@@ -145,13 +155,14 @@ public class ExamTableFormController implements Initializable {
         });
     }
 
-    public void loadExamTable(){
+    public void loadExamTable() throws SQLException {
         txtFindExam.clear();
         txtFindExam.requestFocus();
-        ArrayList<ExamDto> examDtos = examModel.getAllExams();
+        ArrayList<ExamDto> examDtos = examBO.getAllExamsAndApplicableSubjectNames();
         ObservableList<ExamTm> examTms = FXCollections.observableArrayList();
 
         for (ExamDto examDto : examDtos) {
+            System.out.println("controller grade " + examDto.getGrade());
             ExamTm examTm = new ExamTm(
                     examDto.getExamId(),
                     examDto.getGrade() == null ? "Not Specified grade" : examDto.getGrade(),
@@ -179,6 +190,10 @@ public class ExamTableFormController implements Initializable {
         colDate.setCellValueFactory(new PropertyValueFactory<>("examDate"));
         colDesc.setCellValueFactory(new PropertyValueFactory<>("examDescription"));
 
-        loadExamTable();
+        try {
+            loadExamTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

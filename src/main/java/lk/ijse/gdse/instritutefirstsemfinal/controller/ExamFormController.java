@@ -10,6 +10,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.ExamBO;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.GradeBO;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.SubjectBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.GradeDto;
 import lk.ijse.gdse.instritutefirstsemfinal.model.ExamModel;
@@ -30,11 +32,15 @@ public class ExamFormController implements Initializable {
 
     private ExamTableFormController examTableFormController;
 
-    ExamModel examModel = new ExamModel();
-    GradeModel gradeModel = new GradeModel();
-    SubjectModel subjectModel = new SubjectModel();
+//    ExamModel examModel = new ExamModel();
+//    GradeModel gradeModel = new GradeModel();
+//    SubjectModel subjectModel = new SubjectModel();
 
     ExamBO examBO = (ExamBO) BOFactory.getInstance().getBO(BOFactory.BOType.EXAM);
+
+    GradeBO gradeBO = (GradeBO) BOFactory.getInstance().getBO(BOFactory.BOType.GRADE);
+
+    SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
 
     public void setExamTableFormController(ExamTableFormController examTableFormController) {
         this.examTableFormController = examTableFormController;
@@ -91,7 +97,7 @@ public class ExamFormController implements Initializable {
 
         Optional<ButtonType> buttonType = AlertUtil.ConfirmationAlert("Are you sure Do want to delete this exam schedule",ButtonType.NO,ButtonType.YES);
         if (buttonType.get() == ButtonType.YES) {
-            boolean isDeleted = examModel.deleteExam(id);
+            boolean isDeleted = examBO.deleteExam(id);
             if (isDeleted) {
                 AlertUtil.informationAlert(this.getClass(),null,true,"Exam deleted successfully");
                 refreshPage();
@@ -121,8 +127,8 @@ public class ExamFormController implements Initializable {
         date = dPickerDate.getValue();
         description = tareaBody.getText();
 
-        String gradeID = gradeModel.getGradeIdFromName(grade);
-        String subjectID = subjectModel.getSubjectIdFromName(subject);
+        String gradeID = gradeBO.getGradeIdFromName(grade);
+        String subjectID = subjectBO.getSubjectIDFromName(subject);
 
         if (description.isEmpty()){
             description = "Not Specified Description";
@@ -142,7 +148,7 @@ public class ExamFormController implements Initializable {
             );
 
 
-            boolean isSaved = examModel.saveExam(examDto);
+            boolean isSaved = examBO.saveExam(examDto);
 
 
             if (isSaved){
@@ -170,8 +176,8 @@ public class ExamFormController implements Initializable {
         description = tareaBody.getText();
 
         // Fetch the grade and subject IDs based on the names selected in the UI
-        String gradeID = gradeModel.getGradeIdFromName(grade);
-        String subjectID = subjectModel.getSubjectIdFromName(subject);
+        String gradeID = gradeBO.getGradeIdFromName(grade);
+        String subjectID = subjectBO.getSubjectIDFromName(subject);
 
         if (date == null){
             AlertUtil.informationAlert(this.getClass(),null,false,"Please choose a date");
@@ -208,7 +214,7 @@ public class ExamFormController implements Initializable {
         String exitingDescription = "";
         String exitingType = "";
 
-        ArrayList<ExamDto> exitingExam = examModel.isExitingExam(id);
+        ArrayList<ExamDto> exitingExam = examBO.ExistExam(id);
 
             for (ExamDto examDto1 : exitingExam){
                  exitingSubject = examDto1.getSubject();
@@ -229,7 +235,7 @@ public class ExamFormController implements Initializable {
 
 
 
-            boolean isUpdated = examModel.updateExam(examDto);
+            boolean isUpdated = examBO.updateExam(examDto);
 
 
             if (isUpdated) {
@@ -262,14 +268,14 @@ public class ExamFormController implements Initializable {
 
 
     @FXML
-    void cmbGradeOnAction(ActionEvent event) {
+    void cmbGradeOnAction(ActionEvent event) throws SQLException {
         cmbSubject.getItems().clear();
 
         grade = cmbGrade.getSelectionModel().getSelectedItem();
 
-        String gradeID = gradeModel.getGradeIdFromName(grade);
+        String gradeID = gradeBO.getGradeIdFromName(grade);
 
-        ArrayList<String> subjects = gradeModel.getSubjectsByGradeId(gradeID);
+        ArrayList<String> subjects = subjectBO.getSubjectsDetailsByGradeID(gradeID);
 
         cmbSubject.getItems().addAll(subjects);
     }
@@ -355,7 +361,7 @@ public class ExamFormController implements Initializable {
         cmbExamType.getSelectionModel().clearSelection();
         dPickerDate.setValue(null);
 
-        ArrayList<GradeDto> grades = gradeModel.getGrades();
+        ArrayList<GradeDto> grades = gradeBO.getAllGrades();
         ArrayList<String> examTypes = new ArrayList<>(Arrays.asList(
                 "Midterm Exam",
                 "Final Exam",
@@ -413,15 +419,15 @@ public class ExamFormController implements Initializable {
     }
 
 
-    public void setDto(ExamDto examDto) {
+    public void setDto(ExamDto examDto) throws SQLException {
         lblExamID.setText(examDto.getExamId());
         tareaBody.setText(examDto.getExamDescription());
         dPickerDate.setValue(examDto.getExamDate());
         cmbExamType.getSelectionModel().select(examDto.getExamType().equals("Not Specified Type") ? "None" : examDto.getExamType());
         cmbGrade.getSelectionModel().select(examDto.getGrade());
-        String gradeID = gradeModel.getGradeIdFromName(examDto.getGrade());
+        String gradeID = gradeBO.getGradeIdFromName(examDto.getGrade());
         cmbSubject.getItems().clear();
-        ArrayList<String> subjects = gradeModel.getSubjectsByGradeId(gradeID);
+        ArrayList<String> subjects = subjectBO.getSubjectsDetailsByGradeID(gradeID);
 
         cmbSubject.getItems().addAll(subjects);
         cmbSubject.getSelectionModel().select(examDto.getSubject());
