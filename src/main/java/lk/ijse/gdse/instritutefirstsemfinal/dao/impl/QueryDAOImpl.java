@@ -1,13 +1,16 @@
 package lk.ijse.gdse.instritutefirstsemfinal.dao.impl;
 
 import lk.ijse.gdse.instritutefirstsemfinal.dao.QueryDAO;
+import lk.ijse.gdse.instritutefirstsemfinal.dto.StudentDto;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Subject;
+import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.StudentCustom;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.SubjectCustom;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.TeacherCustom;
 import lk.ijse.gdse.instritutefirstsemfinal.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,6 +159,129 @@ public class QueryDAOImpl implements QueryDAO {
             grades.add(resultSet.getString(2));
         }
         return grades;
+    }
+
+    @Override
+    public ArrayList<StudentCustom> getAllStudentsWithLearnSubjects() throws SQLException {
+        ArrayList<StudentCustom> studentEntities = new ArrayList<>();
+        ResultSet resultSet = CrudUtil.execute(
+                "SELECT s.s_id AS 'Student ID', " +
+                        "s.name AS 'Student Name', " +
+                        "s.birthday AS 'Date Of Birth', " +
+                        "s.admission_fee AS 'Admission Fee', " +
+                        "s.parent_name AS 'Parent Name', " +
+                        "s.email AS 'Email', " +
+                        "s.phone_number AS 'Phone Number', " +
+                        "s.address AS 'Address', " +
+                        "g.grade AS 'Grade', " +
+                        "GROUP_CONCAT(sb.sub_name SEPARATOR ', ') AS 'Subjects', " +
+                        "s.added_by AS 'Added By' " +
+                        "FROM student s " +
+                        "LEFT JOIN grade g ON g.g_id = s.grade " +
+                        "LEFT JOIN student_subject ss ON ss.student_id = s.s_id " +
+                        "LEFT JOIN subject sb ON sb.sub_id = ss.subject_id " +
+                        "GROUP BY s.s_id;"
+        );
+        while (resultSet.next()) {
+            String id = resultSet.getString(1);
+            String name = resultSet.getString(2);
+            LocalDate birthday = resultSet.getDate(3) != null
+                    ? resultSet.getDate("Date Of Birth").toLocalDate()
+                    : null;
+            double admissionFee = resultSet.getDouble(4);
+            String parentName = resultSet.getString(5);
+            String email = resultSet.getString(6);
+            String phoneNumber = resultSet.getString(7);
+            String address = resultSet.getString(8);
+            String grade = resultSet.getString(9);
+            String addedBy = resultSet.getString(11);
+
+            String subjectsString = resultSet.getString(10);
+            String[] subjects = subjectsString != null ? subjectsString.split(", ") : new String[0];
+
+            StudentCustom studentCustomEntity = new StudentCustom(
+                    id,
+                    birthday,
+                    name,
+                    admissionFee,
+                    parentName,
+                    email,
+                    phoneNumber,
+                    address,
+                    addedBy,
+                    grade,
+                    subjects
+            );
+
+            studentEntities.add(studentCustomEntity);
+        }
+        return studentEntities;
+
+    }
+
+    @Override
+    public ArrayList<StudentCustom> getStudentAllDetailsByID(String studentId) throws SQLException {
+        ArrayList<StudentCustom> studentCustoms = new ArrayList<>();
+
+            ResultSet resultSet = CrudUtil.execute(
+                    "SELECT s.s_id AS 'Student ID', " +
+                            "s.name AS 'Student Name', " +
+                            "s.birthday AS 'Date Of Birth', " +
+                            "s.admission_fee AS 'Admission Fee', " +
+                            "s.parent_name AS 'Parent Name', " +
+                            "s.email AS 'Email', " +
+                            "s.phone_number AS 'Phone Number', " +
+                            "s.address AS 'Address', " +
+                            "g.grade AS 'Grade', " +
+                            "GROUP_CONCAT(sb.sub_name SEPARATOR ', ') AS 'Subjects', " +
+                            "s.added_by AS 'Added By' " +
+                            "FROM student s " +
+                            "LEFT JOIN grade g ON g.g_id = s.grade " +
+                            "LEFT JOIN student_subject ss ON ss.student_id = s.s_id " +
+                            "LEFT JOIN subject sb ON sb.sub_id = ss.subject_id " +
+                            "WHERE s.s_id = ? " +
+                            "GROUP BY s.s_id;", studentId
+            );
+
+
+            while (resultSet.next()) {
+
+                String id = resultSet.getString(1);
+                String name = resultSet.getString(2);
+                LocalDate birthday = resultSet.getDate(3) != null
+                        ? resultSet.getDate("Date Of Birth").toLocalDate()
+                        : null;
+                double admissionFee = resultSet.getDouble(4);
+                String parentName = resultSet.getString(5);
+                String email = resultSet.getString(6);
+                String phoneNumber = resultSet.getString(7);
+                String address = resultSet.getString(8);
+                String grade = resultSet.getString(9);
+                String addedBy = resultSet.getString(11);
+
+
+                String subjectsString = resultSet.getString(10);
+                String[] subjects = subjectsString != null ? subjectsString.split(", ") : new String[0];
+
+
+                StudentCustom studentCustomEntity = new StudentCustom(
+                        id,
+                        birthday,
+                        name,
+                        admissionFee,
+                        parentName,
+                        email,
+                        phoneNumber,
+                        address,
+                        addedBy,
+                        grade,
+                        subjects
+                );
+
+
+                studentCustoms.add(studentCustomEntity);
+            }
+            return studentCustoms;
     }
 
 

@@ -20,6 +20,7 @@
         import org.controlsfx.control.CheckComboBox;
 
         import java.net.URL;
+        import java.sql.SQLException;
         import java.time.LocalDate;
         import java.util.*;
 
@@ -152,7 +153,7 @@
             ///////////////////////////// BUTTONS ///////////////////////////////////
 
             @FXML
-            void btnDeleteOnAction(ActionEvent event) {
+            void btnDeleteOnAction(ActionEvent event) throws SQLException {
 
                 Optional<ButtonType> buttonType = AlertUtil.ConfirmationAlert("Are you sure you want to delete this Student?", ButtonType.NO, ButtonType.YES);
                 if (buttonType.isPresent() && buttonType.get() == ButtonType.YES) {
@@ -174,7 +175,7 @@
             }
 
             @FXML
-            void btnSaveOnAction(ActionEvent event) {
+            void btnSaveOnAction(ActionEvent event) throws SQLException {
                 String id = lblStudentID.getText();
                 LocalDate birthday = dpDOB.getValue();
                 String name = txtName.getText();
@@ -234,7 +235,7 @@
             }
 
             @FXML
-            void btnUpdateOnAction(ActionEvent event) {
+            void btnUpdateOnAction(ActionEvent event) throws SQLException {
                 String id = lblStudentID.getText();
                 LocalDate birthday = dpDOB.getValue();
                 String name = txtName.getText();

@@ -21,6 +21,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.StudentBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.StudentDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.StudentTm;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.SubjectTm;
@@ -29,6 +31,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -37,6 +40,7 @@ import java.util.function.Predicate;
 public class StudentTableFormController implements Initializable {
     StudentFormController studentFormController = new StudentFormController();
     StudentModel studentModel = new StudentModel();
+    StudentBO studentBO = (StudentBO) BOFactory.getInstance().getBO(BOFactory.BOType.STUDENT);
 
     @FXML
     private Pane StudentPane;
@@ -210,8 +214,8 @@ public class StudentTableFormController implements Initializable {
     }
 
 
-    public void loadTable() {
-        ArrayList<StudentDto> studentDtos = studentModel.getAllStudents();
+    public void loadTable() throws SQLException {
+        ArrayList<StudentDto> studentDtos = studentBO.getAllStudentsWithLearnSubjects();
         ObservableList<StudentTm> studentTmList = FXCollections.observableArrayList();
 
         for (StudentDto studentDto : studentDtos) {
@@ -248,6 +252,10 @@ public class StudentTableFormController implements Initializable {
         colGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
         colDOB.setCellValueFactory(new PropertyValueFactory<>("birthday"));
 
-        loadTable();
+        try {
+            loadTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
