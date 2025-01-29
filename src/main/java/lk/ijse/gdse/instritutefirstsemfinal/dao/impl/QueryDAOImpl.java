@@ -1,8 +1,8 @@
 package lk.ijse.gdse.instritutefirstsemfinal.dao.impl;
 
 import lk.ijse.gdse.instritutefirstsemfinal.dao.QueryDAO;
-import lk.ijse.gdse.instritutefirstsemfinal.dto.StudentDto;
-import lk.ijse.gdse.instritutefirstsemfinal.entity.Subject;
+import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
+import lk.ijse.gdse.instritutefirstsemfinal.entity.Exam;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.StudentCustom;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.SubjectCustom;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.TeacherCustom;
@@ -303,6 +303,55 @@ public class QueryDAOImpl implements QueryDAO {
 
         return subjects;
 
+    }
+
+    @Override
+    public ArrayList<Exam> getAllExamsAndApplicableSubjects() throws SQLException {
+        ArrayList<Exam> examEntities = new ArrayList<>();
+
+        ResultSet resultSet = CrudUtil.execute(
+                "SELECT e.exam_id, g.grade, s.sub_name AS subject, e.date, e.exam_type," +
+                        " e.description FROM exam AS e LEFT JOIN " +
+                        "subject AS s ON e.subject_id = s.sub_id LEFT JOIN grade" +
+                        " AS g ON e.grade = g.g_id"
+        );
+        while (resultSet.next()) {
+            Exam examEntity = new Exam();
+
+            examEntity.setExamId(resultSet.getString(1));
+            examEntity.setGrade(resultSet.getString(2));
+            examEntity.setSubject(resultSet.getString(3));
+            examEntity.setExamDate(resultSet.getDate(4).toLocalDate());
+            examEntity.setExamType(resultSet.getString(5));
+            examEntity.setDescription(resultSet.getString(6));
+            examEntities.add(examEntity);
+        }
+        return examEntities;
+    }
+
+    @Override
+    public Exam getNextUpCommingExam() throws SQLException {
+
+        ResultSet resultSet = CrudUtil.execute("""
+        SELECT e.exam_id, g.grade AS grade_name, s.sub_name AS subject_name, e.exam_type, e.date AS exam_date, DATEDIFF(e.date, CURDATE()) AS days_until_exam 
+        FROM exam e 
+        JOIN subject s ON e.subject_id = s.sub_id 
+        JOIN grade g ON e.grade = g.g_id 
+        WHERE e.date > CURDATE() 
+        ORDER BY e.date ASC LIMIT 1;
+        """);
+
+        if (resultSet.next()) {
+            return new Exam(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDate(5).toLocalDate(),
+                    resultSet.getString(4),
+                    resultSet.getString(6)
+            );
+        }
+        return null;
     }
 
 

@@ -1,6 +1,7 @@
 package lk.ijse.gdse.instritutefirstsemfinal.dao;
 
 import lk.ijse.gdse.instritutefirstsemfinal.dto.StudentDto;
+import lk.ijse.gdse.instritutefirstsemfinal.entity.Exam;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Student;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Subject;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.StudentCustom;
@@ -28,5 +29,9 @@ public interface QueryDAO extends SuperDAO {
     ArrayList<StudentCustom> getStudentAllDetailsByID(String studentId) throws SQLException;
 
     ArrayList<String> getSubjectsDetailsByGradeID(String gradeId) throws SQLException;
+
+    ArrayList<Exam> getAllExamsAndApplicableSubjects() throws SQLException;
+
+    Exam getNextUpCommingExam() throws SQLException;
 
 }
