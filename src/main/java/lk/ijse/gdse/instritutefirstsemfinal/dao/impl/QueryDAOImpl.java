@@ -1,7 +1,13 @@
 package lk.ijse.gdse.instritutefirstsemfinal.dao.impl;
 
+import lk.ijse.gdse.instritutefirstsemfinal.dao.DAOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.dao.QueryDAO;
+import lk.ijse.gdse.instritutefirstsemfinal.dao.agreement.GradeDAO;
+import lk.ijse.gdse.instritutefirstsemfinal.dao.agreement.StudentDAO;
+import lk.ijse.gdse.instritutefirstsemfinal.dao.agreement.SubjectDAO;
+import lk.ijse.gdse.instritutefirstsemfinal.dto.ResultDto;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Exam;
+import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.ResultCustom;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.StudentCustom;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.SubjectCustom;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.custom.TeacherCustom;
@@ -14,6 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QueryDAOImpl implements QueryDAO {
+
+    GradeDAO gradeDAO = (GradeDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.GRADE);
+
+    StudentDAO studentDAO = (StudentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.STUDENT);
+
+    SubjectDAO subjectDAO = (SubjectDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.SUBJECT);
 
     @Override
     public ArrayList<SubjectCustom> getAllSubjectsAndRelatedGrades() throws SQLException {
@@ -351,6 +363,40 @@ public class QueryDAOImpl implements QueryDAO {
             );
         }
         return null;
+    }
+
+    @Override
+    public ArrayList<ResultCustom> getAllResultsWithSubjects() throws SQLException {
+        ArrayList<ResultCustom> resultEntities = new ArrayList<>();
+
+        ResultSet resultSet = CrudUtil.execute(
+                "SELECT r.result_id,r.grade , e.subject_id, r.exam_id, " +
+                        "r.student_id, r.marks, r.exam_grade, r.status FROM " +
+                        "result r LEFT JOIN exam e ON r.exam_id = e.exam_id"
+        );
+
+        while (resultSet.next()) {
+            String gradeName =  gradeDAO.getGradeNameFromID(resultSet.getString("grade"));
+            String studentName = studentDAO.getStudentNameByID(resultSet.getString("student_id"));
+            String subjectName = subjectDAO.getSubjectByID(resultSet.getString("subject_id"));
+
+
+            ResultCustom resultEntity = new ResultCustom(
+                    resultSet.getString(1),
+                    gradeName,
+                    subjectName,
+                    resultSet.getString(4),
+                    studentName,
+                    resultSet.getInt(6),
+                    resultSet.getString(7),
+                    resultSet.getString(8)
+
+            );
+            resultEntities.add(resultEntity);
+
+        }
+        return resultEntities;
+
     }
 
 

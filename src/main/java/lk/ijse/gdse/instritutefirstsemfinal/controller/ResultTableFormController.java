@@ -19,6 +19,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.ResultBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ResultDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.ResultTm;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.StudentTm;
@@ -26,6 +28,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.model.ResultModel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
@@ -34,7 +37,9 @@ public class ResultTableFormController implements Initializable {
 
     ResultFormController resultFormController = new ResultFormController();
 
-    ResultModel resultModel = new ResultModel();
+//    ResultModel resultModel = new ResultModel();
+
+    ResultBO resultBO = (ResultBO) BOFactory.getInstance().getBO(BOFactory.BOType.RESULT);
 
     @FXML
     private Pane ResultPane;
@@ -159,8 +164,8 @@ public class ResultTableFormController implements Initializable {
 
     }
 
-    public void loadTable(){
-        ArrayList<ResultDto> resultDtos = resultModel.getAllResults();
+    public void loadTable() throws SQLException {
+        ArrayList<ResultDto> resultDtos = resultBO.getAllResultsWithSubjects();
         ObservableList<ResultTm > resultTms = FXCollections.observableArrayList();
         for (ResultDto resultDto : resultDtos) {
             ResultTm resultTm = new ResultTm(
@@ -192,7 +197,11 @@ public class ResultTableFormController implements Initializable {
         colMarks.setCellValueFactory(new PropertyValueFactory<>("marks"));
         colSubject.setCellValueFactory(new PropertyValueFactory<>("subject"));
 
-        loadTable();
+        try {
+            loadTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }

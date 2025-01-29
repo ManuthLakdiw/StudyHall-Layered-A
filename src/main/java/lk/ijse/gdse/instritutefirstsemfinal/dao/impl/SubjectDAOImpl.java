@@ -134,6 +134,20 @@ public class SubjectDAOImpl implements SubjectDAO {
         return subjectIds;
     }
 
+    @Override
+    public String getSubjectByID(String subjectID) throws SQLException {
+
+        ResultSet resultSet = CrudUtil.execute(
+                "select sub_name from subject where sub_id = ?",
+                subjectID
+        );
+        if (resultSet.next()) {
+            return resultSet.getString("sub_name");
+        }
+        return "Not Found";
+
+    }
+
 //    @Override
 //    public List<String> getSubjectIDsFromName(List<String> subjectNames) throws SQLException {
 //

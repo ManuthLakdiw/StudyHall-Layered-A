@@ -11,4 +11,5 @@ public interface SubjectDAO extends CrudDAO<Subject> {
     boolean existsSubjectByName(String subjectName) throws SQLException;
     String getSubjectIDFromName(String subjectName) throws SQLException;
     List<String> getSubjectIDsFromName(List<String> subjectNames) throws SQLException;
+    String getSubjectByID(String subjectID) throws SQLException;
 }

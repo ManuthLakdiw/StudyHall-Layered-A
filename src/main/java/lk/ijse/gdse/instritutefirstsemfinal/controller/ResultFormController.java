@@ -19,6 +19,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.util.RegexUtil;
 import org.controlsfx.control.SearchableComboBox;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 
 public class ResultFormController implements Initializable {
@@ -89,7 +90,7 @@ public class ResultFormController implements Initializable {
     private TextField txtMarks;
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
+    void btnDeleteOnAction(ActionEvent event) throws SQLException {
         resultId = lblResultID.getText();
 
         Optional<ButtonType> buttonType = AlertUtil.ConfirmationAlert("Are you sure?,This action will permanently delete the selected result.",ButtonType.NO,ButtonType.YES);
@@ -115,7 +116,7 @@ public class ResultFormController implements Initializable {
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(ActionEvent event) throws SQLException {
         resultId = lblResultID.getText();
         if (!txtMarks.getText().isEmpty()) {
             marks = Integer.parseInt(txtMarks.getText());
@@ -164,7 +165,7 @@ public class ResultFormController implements Initializable {
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
+    void btnUpdateOnAction(ActionEvent event) throws SQLException {
         resultId = lblResultID.getText();
         if (!txtMarks.getText().isEmpty()) {
             marks = Integer.parseInt(txtMarks.getText());
