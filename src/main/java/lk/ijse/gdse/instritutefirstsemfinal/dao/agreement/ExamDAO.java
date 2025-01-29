@@ -15,5 +15,7 @@ public interface ExamDAO  extends CrudDAO<Exam> {
 
     ArrayList<Exam> ExistExam(String examID) throws SQLException;
 
+    String[] getExamSubjectsByGrade(String grade) throws SQLException;
+
 
 }

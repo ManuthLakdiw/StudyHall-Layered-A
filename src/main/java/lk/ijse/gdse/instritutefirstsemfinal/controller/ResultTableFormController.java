@@ -151,6 +151,7 @@ public class ResultTableFormController implements Initializable {
                             resultTm.getGrade().toLowerCase().contains(newValue.toLowerCase()) ||
                             resultTm.getStatus().toLowerCase().contains(newValue.toLowerCase()) ||
                             resultTm.getGradeArchieved().toLowerCase().contains(newValue.toLowerCase()) ||
+                            resultTm.getStudent().toLowerCase().contains(newValue.toLowerCase()) ||
                             resultTm.getSubject().toLowerCase().contains(newValue.toLowerCase());
 
                 }

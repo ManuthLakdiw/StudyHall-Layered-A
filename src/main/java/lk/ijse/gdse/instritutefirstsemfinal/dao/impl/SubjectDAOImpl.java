@@ -54,7 +54,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 
     @Override
     public Subject exist(String id) throws SQLException, ClassNotFoundException { //getSubjectNameFromId
-        ResultSet rs = CrudUtil.execute("SELECT * FROM subject WHERE subject_id = ?",
+        ResultSet rs = CrudUtil.execute("SELECT * FROM subject WHERE sub_id = ?",
                 id
         );
         if (rs.next()) {

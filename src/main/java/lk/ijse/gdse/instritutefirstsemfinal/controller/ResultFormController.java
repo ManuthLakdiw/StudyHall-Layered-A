@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.*;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ResultDto;
 import lk.ijse.gdse.instritutefirstsemfinal.model.ExamModel;
@@ -24,10 +26,20 @@ import java.util.*;
 
 public class ResultFormController implements Initializable {
 
-    ExamModel examModel = new ExamModel();
-    ResultModel resultModel = new ResultModel();
-    SubjectModel subjectModel = new SubjectModel();
-    GradeModel gradeModel = new GradeModel();
+//    ExamModel examModel = new ExamModel();
+//    ResultModel resultModel = new ResultModel();
+//    SubjectModel subjectModel = new SubjectModel();
+//    GradeModel gradeModel = new GradeModel();
+
+    ResultBO resultBO = (ResultBO) BOFactory.getInstance().getBO(BOFactory.BOType.RESULT);
+
+    StudentBO studentBO = (StudentBO) BOFactory.getInstance().getBO(BOFactory.BOType.STUDENT);
+
+    ExamBO examBO = (ExamBO) BOFactory.getInstance().getBO(BOFactory.BOType.EXAM);
+
+    SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
+
+    GradeBO gradeBO = (GradeBO) BOFactory.getInstance().getBO(BOFactory.BOType.GRADE);
 
     String marksRegex = "^(100|[1-9]?[0-9])$";
 
@@ -90,17 +102,18 @@ public class ResultFormController implements Initializable {
     private TextField txtMarks;
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) throws SQLException {
+    void btnDeleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         resultId = lblResultID.getText();
 
         Optional<ButtonType> buttonType = AlertUtil.ConfirmationAlert("Are you sure?,This action will permanently delete the selected result.",ButtonType.NO,ButtonType.YES);
 
         if (buttonType.get() == ButtonType.YES) {
-            boolean isDeleted = resultModel.deleteResult(resultId);
+//            boolean isDeleted = resultModel.deleteResult(resultId);
+            boolean isDeleted = resultBO.deleteResult(resultId);
 
             if (isDeleted) {
                 AlertUtil.informationAlert(this.getClass(), null, true, "Result deleted successfully.");
-                lblResultID.setText(resultModel.getNextResultID());
+                lblResultID.setText(resultBO.generateNewResultID());
                 refreshPage();
                 resultTableFormController.loadTable();
             } else {
@@ -111,12 +124,12 @@ public class ResultFormController implements Initializable {
 
 
     @FXML
-    void btnResetOnAction(ActionEvent event) {
+    void btnResetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         refreshPage();
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) throws SQLException {
+    void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         resultId = lblResultID.getText();
         if (!txtMarks.getText().isEmpty()) {
             marks = Integer.parseInt(txtMarks.getText());
@@ -144,11 +157,11 @@ public class ResultFormController implements Initializable {
                 status
         );
 
-        boolean isSaved = resultModel.saveResult(dto);
+        boolean isSaved = resultBO.saveResult(dto);
 
         if (isSaved) {
             AlertUtil.informationAlert(this.getClass(),null,false,"Result saved Successfully");
-            lblResultID.setText(resultModel.getNextResultID());
+            lblResultID.setText(resultBO.generateNewResultID());
             radioBtnNotPArticipant.setSelected(false);
             txtMarks.setText("");
             cmbStudent.getSelectionModel().clearSelection();
@@ -165,7 +178,7 @@ public class ResultFormController implements Initializable {
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) throws SQLException {
+    void btnUpdateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         resultId = lblResultID.getText();
         if (!txtMarks.getText().isEmpty()) {
             marks = Integer.parseInt(txtMarks.getText());
@@ -182,7 +195,9 @@ public class ResultFormController implements Initializable {
             gradeArchived = "F";
         }
 
-        ArrayList<ResultDto> resultDtos = resultModel.checkExitingResult(lblResultID.getText());
+        ArrayList<ResultDto> resultDtos = resultBO.checkExitingResult(lblResultID.getText());
+
+
         ResultDto dto = new ResultDto(
                 resultId,
                 grade,
@@ -194,7 +209,25 @@ public class ResultFormController implements Initializable {
                 status
         );
 
-        boolean isUpdated = resultModel.updateResult(dto);
+        for (ResultDto resultDto : resultDtos) {
+
+            boolean isSameGrade = resultDto.getGrade().equals(cmbGrade.getValue());
+            boolean isSameSubject = resultDto.getSubject().equals(cmbSubject.getValue());
+            boolean isSameExamID = resultDto.getExam().equals(cmbExamID.getValue());
+            boolean isSameStudent= resultDto.getStudent().equals(cmbStudent.getValue());
+            boolean isSameMarks = resultDto.getMarks() == marks;
+            boolean isSameGradeArchived = resultDto.getGradeArchieved().equals(gradeArchived);
+            boolean isSameStatus = resultDto.getStatus().equals(status);
+
+            if (isSameGrade && isSameSubject && isSameExamID && isSameStudent && isSameMarks && isSameGradeArchived && isSameStatus) {
+                AlertUtil.informationAlert(this.getClass(), null, true, "No changes detected. Update is not necessary.");
+                return;
+            }
+        }
+
+
+
+        boolean isUpdated = resultBO.updateResult(dto);
 
         if (isUpdated) {
             AlertUtil.informationAlert(this.getClass(), null, true, "Result updated successfully");
@@ -237,7 +270,7 @@ public class ResultFormController implements Initializable {
     }
 
     @FXML
-    private void cmbGradeOnAction(ActionEvent event) {
+    private void cmbGradeOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String selectedGrade = cmbGrade.getSelectionModel().getSelectedItem();
 
         cmbSubject.getItems().clear();
@@ -246,13 +279,13 @@ public class ResultFormController implements Initializable {
         lblExamIdDesc.setText("");
 
         if (selectedGrade != null) {
-            String gradeId = gradeModel.getGradeIdFromName(selectedGrade);
+            String gradeId = gradeBO.getGradeIdFromName(selectedGrade);
 
-            String[] subjectIDs = resultModel.getExamSubjectsByGrade(gradeId);
+            String[] subjectIDs = examBO.getExamSubjectsByGrade(gradeId);
             Set<String> subjectNamesSet = new HashSet<>();
 
             for (String subjectID : subjectIDs) {
-                String subjectName = subjectModel.getSubjectNameFromId(subjectID);
+                String subjectName = subjectBO.getSubjectNameFromID(subjectID);
                 if (subjectName != null) {
                     subjectNamesSet.add(subjectName);
                 }
@@ -263,8 +296,8 @@ public class ResultFormController implements Initializable {
             if (!subjectNamesSet.isEmpty()) {
                 String selectedSubject = cmbSubject.getSelectionModel().getSelectedItem();
                 if (selectedSubject != null) {
-                    String subjectId = subjectModel.getSubjectIdFromName(selectedSubject);
-                    ArrayList<String> studentNames = resultModel.getStudentsByGradeAndSubject(gradeId, subjectId);
+                    String subjectId = subjectBO.getSubjectIDFromName(selectedSubject);
+                    ArrayList<String> studentNames = studentBO.getStudentsByGradeAndSubject(gradeId, subjectId);
                     if (studentNames != null && !studentNames.isEmpty()) {
                         cmbStudent.getItems().addAll(studentNames);
                     }
@@ -276,7 +309,7 @@ public class ResultFormController implements Initializable {
 
 
     @FXML
-    void cmbSubjectOnAction(ActionEvent event) {
+    void cmbSubjectOnAction(ActionEvent event) throws SQLException {
         String selectedSubject = cmbSubject.getSelectionModel().getSelectedItem();
         String selectedGrade = cmbGrade.getSelectionModel().getSelectedItem();
 
@@ -285,15 +318,15 @@ public class ResultFormController implements Initializable {
         lblExamIdDesc.setText("");
 
         if (selectedSubject != null && selectedGrade != null) {
-            String subjectId = subjectModel.getSubjectIdFromName(selectedSubject);
-            String gradeId = gradeModel.getGradeIdFromName(selectedGrade);
+            String subjectId = subjectBO.getSubjectIDFromName(selectedSubject);
+            String gradeId = gradeBO.getGradeIdFromName(selectedGrade);
 
-            ArrayList<String> studentNames = resultModel.getStudentsByGradeAndSubject(gradeId, subjectId);
+            ArrayList<String> studentNames = studentBO.getStudentsByGradeAndSubject(gradeId, subjectId);
             if (studentNames != null && !studentNames.isEmpty()) {
                 cmbStudent.getItems().addAll(studentNames);
             }
 
-            String[] examIDs = examModel.getExamIDsfromSubject(subjectId);
+            String[] examIDs = examBO.getExamIDsUsingSubject(subjectId);
             if (examIDs != null && examIDs.length > 0) {
                 cmbExamID.getItems().addAll(examIDs);
             } else {
@@ -306,11 +339,11 @@ public class ResultFormController implements Initializable {
     }
 
 
-    public void cmbExamIDOnAction(ActionEvent actionEvent) {
+    public void cmbExamIDOnAction(ActionEvent actionEvent) throws SQLException {
         String selectedExamID = cmbExamID.getSelectionModel().getSelectedItem();
 
         if (selectedExamID != null) {
-            ArrayList<ExamDto> examDtos = examModel.getAllExams();
+            ArrayList<ExamDto> examDtos = examBO.getAllExamsAndApplicableSubjectNames();
 
             for (ExamDto examDto : examDtos) {
                 if (examDto.getExamId().equals(selectedExamID)) {
@@ -356,7 +389,12 @@ public class ResultFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ArrayList<ExamDto> examDtos = examModel.getAllExams();
+        ArrayList<ExamDto> examDtos = null;
+        try {
+            examDtos = examBO.getAllExamsAndApplicableSubjectNames();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         HashSet<String> uniqueGrades = new HashSet<>();
 
         for (ExamDto examDto : examDtos) {
@@ -364,7 +402,13 @@ public class ResultFormController implements Initializable {
         }
         cmbGrade.getItems().addAll(uniqueGrades);
 
-        refreshPage();
+        try {
+            refreshPage();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -379,10 +423,10 @@ public class ResultFormController implements Initializable {
 
 
 
-    public void refreshPage(){
+    public void refreshPage() throws SQLException, ClassNotFoundException {
         btnSave.setVisible(true);
         cmbGrade.getSelectionModel().clearSelection();
-        String resultId = resultModel.getNextResultID();
+        String resultId = resultBO.generateNewResultID();
         lblResultID.setText(resultId);
 
         RegexUtil.resetStyle(txtMarks);

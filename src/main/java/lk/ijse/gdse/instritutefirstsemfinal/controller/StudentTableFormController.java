@@ -163,25 +163,27 @@ public class StudentTableFormController implements Initializable {
 
     @FXML
     void txtFindStudentOnKeyRelesed(KeyEvent event) {
-
         txtFindStudent.textProperty().addListener((observable, oldValue, newValue) -> {
             filter.setPredicate((Predicate<? super StudentTm>) (StudentTm studentTm) -> {
                 if (newValue == null || newValue.isEmpty()) {
-                    return true; // Return all subjects if the search text is empty
-                } else {
-                    // Perform case-insensitive matching
-                    return studentTm.getId().toLowerCase().contains(newValue.toLowerCase()) ||
-                            studentTm.getName().toLowerCase().contains(newValue.toLowerCase()) ||
-                            studentTm.getGrade().toLowerCase().contains(newValue.toLowerCase());
+                    return true; // Return all students if the search text is empty
                 }
+
+                String id = studentTm.getId() != null ? studentTm.getId().toLowerCase() : "";
+                String name = studentTm.getName() != null ? studentTm.getName().toLowerCase() : "";
+                String grade = studentTm.getGrade() != null ? studentTm.getGrade().toLowerCase() : "";
+
+                return id.contains(newValue.toLowerCase()) ||
+                        name.contains(newValue.toLowerCase()) ||
+                        grade.contains(newValue.toLowerCase());
             });
 
             SortedList<StudentTm> sortedList = new SortedList<>(filter);
             sortedList.comparatorProperty().bind(tblStudent.comparatorProperty());
             tblStudent.setItems(sortedList);
         });
-
     }
+
 
 
     public  void navigateTo(String fxmlPath, String loadErrorpane) {

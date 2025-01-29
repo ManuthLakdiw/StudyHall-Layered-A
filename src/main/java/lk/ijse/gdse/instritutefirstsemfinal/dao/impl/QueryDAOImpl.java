@@ -399,5 +399,51 @@ public class QueryDAOImpl implements QueryDAO {
 
     }
 
+    @Override
+    public ArrayList<ResultCustom> checkExitingResult(String resultId) throws SQLException {
+        ArrayList<ResultCustom> resultEntities = new ArrayList<>();
 
+        ResultSet resultSet = CrudUtil.execute(
+                "SELECT r.result_id, r.grade, e.subject_id, r.exam_id, r.student_id, r.marks, r.exam_grade, r.status " +
+                        "FROM result r " +
+                        "LEFT JOIN exam e ON r.exam_id = e.exam_id " +
+                        "WHERE r.result_id = ?",
+                resultId
+        );
+        while (resultSet.next()) {
+            String gradeName =  gradeDAO.getGradeNameFromID(resultSet.getString("grade"));
+            String studentName = studentDAO.getStudentNameByID(resultSet.getString("student_id"));
+            String subjectName = subjectDAO.getSubjectByID(resultSet.getString("subject_id"));
+
+            ResultCustom resultEntity = new ResultCustom(
+                    resultSet.getString(1),
+                    gradeName,
+                    subjectName,
+                    resultSet.getString(4),
+                    studentName,
+                    resultSet.getInt(6),
+                    resultSet.getString(7),
+                    resultSet.getString(8)
+            );
+            resultEntities.add(resultEntity);
+        }
+        return resultEntities;
+    }
+
+    @Override
+    public ArrayList<String> getStudentsByGradeAndSubject(String gradeId, String subjectId) throws SQLException {
+        ArrayList<String> studentNames = new ArrayList<>();
+
+        ResultSet resultSet = CrudUtil.execute(
+                "SELECT s.name FROM student s " +
+                        "JOIN student_subject ss ON s.s_id = ss.student_id " +
+                        "WHERE s.grade = ? AND ss.subject_id = ?",
+                gradeId,
+                subjectId
+        );
+        while (resultSet.next()) {
+            studentNames.add(resultSet.getString("name"));
+        }
+        return studentNames;
+    }
 }

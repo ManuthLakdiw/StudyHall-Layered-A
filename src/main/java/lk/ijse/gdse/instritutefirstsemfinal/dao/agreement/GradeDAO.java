@@ -14,4 +14,5 @@ public interface GradeDAO extends CrudDAO<Grade> {
     String getGradeIdFromName(String grade) throws SQLException;
 
     String getGradeNameFromID(String gradeId) throws SQLException;
+
 }

@@ -192,5 +192,11 @@ public class SubjectBOImpl implements SubjectBO {
         return subjectDAO.getSubjectIDsFromName(subjectNames);
     }
 
+    @Override
+    public String getSubjectNameFromID(String id) throws SQLException, ClassNotFoundException {
+        Subject subject = subjectDAO.exist(id);
+        return subject.getSubjectName();
+    }
+
 
 }

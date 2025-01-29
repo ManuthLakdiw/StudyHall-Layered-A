@@ -103,7 +103,10 @@ public class ExamBOImpl implements ExamBO {
 
     }
 
-
+    @Override
+    public String[] getExamSubjectsByGrade(String grade) throws SQLException {
+        return examDAO.getExamSubjectsByGrade(grade);
+    }
 
 
 }

@@ -134,4 +134,19 @@ public class ExamDAOImpl implements ExamDAO {
         return exams;
 
     }
+
+    @Override
+    public String[] getExamSubjectsByGrade(String grade) throws SQLException {
+        ArrayList<String> subjectsList = new ArrayList<>();
+
+        ResultSet resultSet = CrudUtil.execute(
+                "SELECT subject_id FROM exam WHERE grade =?",
+                grade
+        );
+
+        while (resultSet.next()) {
+            subjectsList.add(resultSet.getString("subject_id"));
+        }
+        return subjectsList.toArray(new String[0]);
+    }
 }

@@ -38,4 +38,8 @@ public interface QueryDAO extends SuperDAO {
 
     ArrayList<ResultCustom> getAllResultsWithSubjects() throws SQLException;
 
+    ArrayList<ResultCustom> checkExitingResult(String resultId) throws SQLException;
+
+    ArrayList<String> getStudentsByGradeAndSubject(String gradeId, String subjectId) throws SQLException;
+
 }

@@ -57,7 +57,6 @@ public class GradeDAOImpl implements GradeDAO {
     }
 
 
-
     @Override
     public List<String> getGradeIdsFromNames(List<String> gradeNames) throws SQLException {
         List<String> gradeIds = new ArrayList<>();
@@ -95,4 +94,6 @@ public class GradeDAOImpl implements GradeDAO {
         }
         return gradeId;
     }
+
+
 }

@@ -24,4 +24,6 @@ public interface StudentBO extends SuperBO {
     ArrayList<StudentDto> getStudentAllDetailsByID(String studentId) throws SQLException, ClassNotFoundException;
 
     String getStudentNameByID(String studentId) throws SQLException;
+
+    ArrayList<String> getStudentsByGradeAndSubject(String gradeId, String subjectId) throws SQLException;
 }
