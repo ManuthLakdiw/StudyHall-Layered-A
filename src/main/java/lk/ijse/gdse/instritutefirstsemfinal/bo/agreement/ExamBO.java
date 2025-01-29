@@ -3,7 +3,9 @@ package lk.ijse.gdse.instritutefirstsemfinal.bo.agreement;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.SuperBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.entity.Exam;
+import lk.ijse.gdse.instritutefirstsemfinal.util.CrudUtil;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -27,6 +29,7 @@ public interface ExamBO extends SuperBO {
 
     String[] getExamSubjectsByGrade(String grade) throws SQLException;
 
+    ExamDto getNextUpComingExam() throws SQLException;
 
 
 

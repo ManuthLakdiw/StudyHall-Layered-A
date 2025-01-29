@@ -7,19 +7,31 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.ExamBO;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.StudentBO;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.TeacherBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.model.ExamModel;
 import lk.ijse.gdse.instritutefirstsemfinal.model.StudentModel;
 import lk.ijse.gdse.instritutefirstsemfinal.model.TeacherModel;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class DashBoardFormController implements Initializable {
 
-    StudentModel studentModel = new StudentModel();
-    TeacherModel teacherModel = new TeacherModel();
-    ExamModel examModel = new ExamModel();
+//    StudentModel studentModel = new StudentModel();
+//    TeacherModel teacherModel = new TeacherModel();
+//    ExamModel examModel = new ExamModel();
+
+    StudentBO studentBO = (StudentBO) BOFactory.getInstance().getBO(BOFactory.BOType.STUDENT);
+
+    TeacherBO teacherBO = (TeacherBO) BOFactory.getInstance().getBO(BOFactory.BOType.TEACHER);
+
+    ExamBO examBO = (ExamBO) BOFactory.getInstance().getBO(BOFactory.BOType.EXAM);
+
 
     @FXML
     private HBox hBox2;
@@ -47,12 +59,32 @@ public class DashBoardFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        lblExam.setText(String.valueOf(examModel.getExamCount()));
-        lblStudent.setText(String.valueOf(studentModel.getStudentCount()));
-        lblTeacher.setText(String.valueOf(teacherModel.getTeacherCount()));
+        try {
+            lblExam.setText(String.valueOf(examBO.getExamCount()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            lblStudent.setText(String.valueOf(studentBO.getStudentCount()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            lblTeacher.setText(String.valueOf(teacherBO.getTeacherCount()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         txtNote.setText(note);
 
-        ExamDto nextExam = examModel.getNextExam();
+        ExamDto nextExam = null;
+        try {
+            nextExam = examBO.getNextUpComingExam();
+            if (nextExam == null) {
+                lblNextExam.setText("No upcoming exams.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         if (nextExam != null) {
             lblNextExam.setText(formatExamDetails(nextExam));
         } else {
@@ -66,6 +98,10 @@ public class DashBoardFormController implements Initializable {
 //    }
 
     private String formatExamDetails(ExamDto exam) {
+
+        if (exam == null) {
+            lblNextExam.setText("No upcoming exams.");
+        }
         return String.format(
                 " %s : %s : %s : %s : %s",
                 exam.getExamId(),

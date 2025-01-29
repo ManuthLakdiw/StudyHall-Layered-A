@@ -10,4 +10,6 @@ public interface TeacherDAO extends CrudDAO<Teacher> {
 
     String getTeacherEmail(String selectedTeacherId) throws SQLException;
 
+    int getTeacherCount() throws SQLException;
+
 }

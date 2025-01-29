@@ -86,4 +86,17 @@ public class TeacherDAOImpl implements TeacherDAO {
         }
         return "Not found";
     }
+
+    @Override
+    public int getTeacherCount() throws SQLException {
+        ResultSet resultSet = CrudUtil.execute(
+                "SELECT COUNT(*) FROM teacher"
+        );
+
+        if (resultSet.next()) {
+            return resultSet.getInt(1);
+        }
+        return 0;
+
+    }
 }

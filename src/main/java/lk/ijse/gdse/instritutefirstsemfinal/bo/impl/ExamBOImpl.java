@@ -108,5 +108,19 @@ public class ExamBOImpl implements ExamBO {
         return examDAO.getExamSubjectsByGrade(grade);
     }
 
+    @Override
+    public ExamDto getNextUpComingExam() throws SQLException {
+        ExamDto examDto = new ExamDto();
+        Exam examEntity = queryDAO.getNextUpComingExam();
+        System.out.println(queryDAO.getNextUpComingExam());
+        examDto.setExamId(examEntity.getExamId());
+        examDto.setSubject(examEntity.getSubject());
+        examDto.setExamDate(examEntity.getExamDate());
+        examDto.setExamDescription(examEntity.getDescription());
+        examDto.setExamType(examEntity.getExamType());
+        examDto.setGrade(examEntity.getGrade());
+        return examDto;
+    }
+
 
 }

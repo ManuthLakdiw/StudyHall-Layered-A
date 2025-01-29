@@ -341,8 +341,7 @@ public class QueryDAOImpl implements QueryDAO {
     }
 
     @Override
-    public Exam getNextUpCommingExam() throws SQLException {
-
+    public Exam getNextUpComingExam() throws SQLException { // error
         ResultSet resultSet = CrudUtil.execute("""
         SELECT e.exam_id, g.grade AS grade_name, s.sub_name AS subject_name, e.exam_type, e.date AS exam_date, DATEDIFF(e.date, CURDATE()) AS days_until_exam 
         FROM exam e 
@@ -354,16 +353,17 @@ public class QueryDAOImpl implements QueryDAO {
 
         if (resultSet.next()) {
             return new Exam(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getDate(5).toLocalDate(),
-                    resultSet.getString(4),
-                    resultSet.getString(6)
+                    resultSet.getString("exam_id"),
+                    resultSet.getString("grade_name"),
+                    resultSet.getString("subject_name"),
+                    resultSet.getDate("exam_date").toLocalDate(),
+                    resultSet.getString("exam_type"),
+                    null
             );
         }
-        return null;
+        return new Exam();
     }
+
 
     @Override
     public ArrayList<ResultCustom> getAllResultsWithSubjects() throws SQLException {

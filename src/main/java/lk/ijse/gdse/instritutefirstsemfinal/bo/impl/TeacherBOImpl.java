@@ -174,5 +174,10 @@ public class TeacherBOImpl implements TeacherBO {
         return teacherDAO.getTeacherEmail(selectedTeacherId);
     }
 
+    @Override
+    public int getTeacherCount() throws SQLException {
+        return teacherDAO.getTeacherCount();
+    }
+
 
 }

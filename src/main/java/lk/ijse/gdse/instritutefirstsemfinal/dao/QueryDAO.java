@@ -34,7 +34,7 @@ public interface QueryDAO extends SuperDAO {
 
     ArrayList<Exam> getAllExamsAndApplicableSubjectNames() throws SQLException;
 
-    Exam getNextUpCommingExam() throws SQLException;
+    Exam getNextUpComingExam() throws SQLException;
 
     ArrayList<ResultCustom> getAllResultsWithSubjects() throws SQLException;
 

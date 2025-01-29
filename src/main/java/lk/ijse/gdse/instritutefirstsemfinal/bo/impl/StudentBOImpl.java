@@ -201,4 +201,9 @@ public class StudentBOImpl implements StudentBO {
     public ArrayList<String> getStudentsByGradeAndSubject(String gradeId, String subjectId) throws SQLException {
         return queryDAO.getStudentsByGradeAndSubject(gradeId, subjectId);
     }
+
+    @Override
+    public int getStudentCount() throws SQLException {
+        return studentDAO.getStudentCount();
+    }
 }
