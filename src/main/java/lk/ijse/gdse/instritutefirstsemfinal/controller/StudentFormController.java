@@ -773,12 +773,15 @@
 
             @FXML
             public void lblClearOnMouseClicked(MouseEvent mouseEvent) {
+                // Get selected subjects
+                ObservableList<String> selectedSubjects = checkCBoxSubject.getCheckModel().getCheckedItems();
 
-                if (!checkCBoxSubject.getCheckModel().getCheckedItems().isEmpty()) {
+                // Check if selected subjects exist or contain null
+                if (selectedSubjects != null && (!selectedSubjects.isEmpty() || selectedSubjects.contains(null))) {
                     checkCBoxSubject.getCheckModel().clearChecks();
                 }
-
             }
+
         }
 
 

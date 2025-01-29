@@ -22,4 +22,6 @@ public interface StudentBO extends SuperBO {
     boolean deleteStudent(String studentId) throws SQLException, ClassNotFoundException;
 
     ArrayList<StudentDto> getStudentAllDetailsByID(String studentId) throws SQLException, ClassNotFoundException;
+
+    String getStudentNameByID(String studentId) throws SQLException;
 }

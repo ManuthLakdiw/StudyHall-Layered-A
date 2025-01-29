@@ -191,4 +191,9 @@ public class StudentBOImpl implements StudentBO {
         }
         return studentDtos;
     }
+
+    @Override
+    public String getStudentNameByID(String studentId) throws SQLException {
+        return studentDAO.getStudentNameByID(studentId);
+    }
 }

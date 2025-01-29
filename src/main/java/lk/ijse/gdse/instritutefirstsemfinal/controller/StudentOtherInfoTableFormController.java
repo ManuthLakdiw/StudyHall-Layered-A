@@ -22,6 +22,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.StudentBO;
+import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.SubjectBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.StudentDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.StudentTm;
 import lk.ijse.gdse.instritutefirstsemfinal.model.StudentModel;
@@ -29,6 +32,7 @@ import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
@@ -37,7 +41,8 @@ import java.util.function.Predicate;
 public class StudentOtherInfoTableFormController implements Initializable {
 
     private String currentLoadedFXML = "";
-    StudentModel studentModel = new StudentModel();
+//    StudentModel studentModel = new StudentModel();
+    StudentBO studentBO= (StudentBO) BOFactory.getInstance().getBO(BOFactory.BOType.STUDENT);
 
     SendMailToStudentFormController sendMailToStudentFormController = new SendMailToStudentFormController();
 
@@ -177,8 +182,8 @@ public class StudentOtherInfoTableFormController implements Initializable {
     }
 
 
-    public void loadTable(){
-        ArrayList<StudentDto> dtos = studentModel.getAllStudents();
+    public void loadTable() throws SQLException {
+        ArrayList<StudentDto> dtos = studentBO.getAllStudentsWithLearnSubjects();
         ObservableList<StudentTm> studentTms = FXCollections.observableArrayList();
 
         for (StudentDto dto : dtos) {
@@ -209,6 +214,10 @@ public class StudentOtherInfoTableFormController implements Initializable {
         colStudentID.setCellValueFactory(new PropertyValueFactory<>("id"));
         colStudentName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        loadTable();
+        try {
+            loadTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

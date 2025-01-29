@@ -39,8 +39,10 @@ import java.util.function.Predicate;
 
 public class StudentTableFormController implements Initializable {
     StudentFormController studentFormController = new StudentFormController();
-    StudentModel studentModel = new StudentModel();
+//    StudentModel studentModel = new StudentModel();
     StudentBO studentBO = (StudentBO) BOFactory.getInstance().getBO(BOFactory.BOType.STUDENT);
+
+
 
     @FXML
     private Pane StudentPane;
@@ -123,11 +125,11 @@ public class StudentTableFormController implements Initializable {
     }
 
     @FXML
-    void tblStudentOnMouseClicked(MouseEvent event) {
+    void tblStudentOnMouseClicked(MouseEvent event) throws SQLException, ClassNotFoundException {
         StudentTm studentTm = tblStudent.getSelectionModel().getSelectedItem();
         if (isClicked){
             if (studentTm != null) {
-                ArrayList<StudentDto> studentDtos = studentModel.getStudentsById(studentTm.getId());
+                ArrayList<StudentDto> studentDtos = studentBO.getStudentAllDetailsByID(studentTm.getId());
 
                 StudentDto dto = null;
                 for (StudentDto studentDto : studentDtos) {
