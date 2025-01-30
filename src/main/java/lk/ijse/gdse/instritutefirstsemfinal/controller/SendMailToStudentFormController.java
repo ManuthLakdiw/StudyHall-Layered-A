@@ -12,9 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.StudentBO;
-import lk.ijse.gdse.instritutefirstsemfinal.dao.QueryDAO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.StudentDto;
-import lk.ijse.gdse.instritutefirstsemfinal.model.StudentModel;
 import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
 
 import javax.mail.*;

@@ -12,9 +12,6 @@ import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.ExamBO;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.StudentBO;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.TeacherBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
-import lk.ijse.gdse.instritutefirstsemfinal.model.ExamModel;
-import lk.ijse.gdse.instritutefirstsemfinal.model.StudentModel;
-import lk.ijse.gdse.instritutefirstsemfinal.model.TeacherModel;
 
 import java.net.URL;
 import java.sql.SQLException;

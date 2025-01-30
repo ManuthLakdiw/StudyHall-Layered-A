@@ -20,7 +20,6 @@ import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.TeacherBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.TeacherDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.TeacherTm;
-import lk.ijse.gdse.instritutefirstsemfinal.model.TeacherModel;
 
 import java.io.IOException;
 import java.net.URL;

@@ -8,7 +8,6 @@ import javafx.scene.layout.Pane;
 
 import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.UserBO;
-import lk.ijse.gdse.instritutefirstsemfinal.model.UserModel;
 import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
 import lk.ijse.gdse.instritutefirstsemfinal.util.NavigationUtil;
 import lk.ijse.gdse.instritutefirstsemfinal.util.RegexUtil;

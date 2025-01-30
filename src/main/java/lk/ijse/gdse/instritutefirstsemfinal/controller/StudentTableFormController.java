@@ -25,8 +25,6 @@ import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.StudentBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.StudentDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.StudentTm;
-import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.SubjectTm;
-import lk.ijse.gdse.instritutefirstsemfinal.model.StudentModel;
 import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
 
 import java.io.IOException;

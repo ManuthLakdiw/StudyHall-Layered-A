@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.UserBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.UserDto;
-import lk.ijse.gdse.instritutefirstsemfinal.model.UserModel;
 import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
 import lk.ijse.gdse.instritutefirstsemfinal.util.RegexUtil;
 

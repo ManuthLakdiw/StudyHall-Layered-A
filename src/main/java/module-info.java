@@ -15,7 +15,7 @@ module lk.ijse.gdse.instritutefirstsemfinal {
     opens lk.ijse.gdse.instritutefirstsemfinal.controller to javafx.fxml;
     exports lk.ijse.gdse.instritutefirstsemfinal;
     opens lk.ijse.gdse.instritutefirstsemfinal.dto to javafx.base;
-    opens lk.ijse.gdse.instritutefirstsemfinal.model to javafx.base;
+    opens lk.ijse.gdse.instritutefirstsemfinal.dao to javafx.base; // change model to dao
 }
 
 

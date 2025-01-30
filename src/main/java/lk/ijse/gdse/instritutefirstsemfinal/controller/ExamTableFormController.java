@@ -21,11 +21,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.ExamBO;
-import lk.ijse.gdse.instritutefirstsemfinal.bo.impl.ExamBOImpl;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.ExamTm;
-import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.StudentTm;
-import lk.ijse.gdse.instritutefirstsemfinal.model.ExamModel;
 
 import java.io.IOException;
 import java.net.URL;

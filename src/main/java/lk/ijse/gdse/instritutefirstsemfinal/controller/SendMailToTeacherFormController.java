@@ -7,14 +7,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.TeacherBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.TeacherDto;
-import lk.ijse.gdse.instritutefirstsemfinal.model.TeacherModel;
 import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
-import lk.ijse.gdse.instritutefirstsemfinal.util.NavigationUtil;
-import lombok.Setter;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -22,7 +18,6 @@ import javax.mail.internet.MimeMessage;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.ResourceBundle;
 

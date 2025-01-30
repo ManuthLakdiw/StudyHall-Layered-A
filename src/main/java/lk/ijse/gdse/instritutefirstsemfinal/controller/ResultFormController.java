@@ -1,6 +1,5 @@
 package lk.ijse.gdse.instritutefirstsemfinal.controller;
 
-import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,13 +11,8 @@ import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.*;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ResultDto;
-import lk.ijse.gdse.instritutefirstsemfinal.model.ExamModel;
-import lk.ijse.gdse.instritutefirstsemfinal.model.GradeModel;
-import lk.ijse.gdse.instritutefirstsemfinal.model.ResultModel;
-import lk.ijse.gdse.instritutefirstsemfinal.model.SubjectModel;
 import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
 import lk.ijse.gdse.instritutefirstsemfinal.util.RegexUtil;
-import org.controlsfx.control.SearchableComboBox;
 
 import java.net.URL;
 import java.sql.SQLException;

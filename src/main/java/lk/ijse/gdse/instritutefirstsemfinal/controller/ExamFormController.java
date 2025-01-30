@@ -14,12 +14,8 @@ import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.GradeBO;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.SubjectBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ExamDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.GradeDto;
-import lk.ijse.gdse.instritutefirstsemfinal.model.ExamModel;
-import lk.ijse.gdse.instritutefirstsemfinal.model.GradeModel;
-import lk.ijse.gdse.instritutefirstsemfinal.model.SubjectModel;
 import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;

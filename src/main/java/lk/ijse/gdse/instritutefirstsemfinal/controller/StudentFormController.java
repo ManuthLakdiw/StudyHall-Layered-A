@@ -17,9 +17,6 @@
         import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.SubjectBO;
         import lk.ijse.gdse.instritutefirstsemfinal.dto.GradeDto;
         import lk.ijse.gdse.instritutefirstsemfinal.dto.StudentDto;
-        import lk.ijse.gdse.instritutefirstsemfinal.model.GradeModel;
-        import lk.ijse.gdse.instritutefirstsemfinal.model.StudentModel;
-        import lk.ijse.gdse.instritutefirstsemfinal.model.SubjectModel;
         import lk.ijse.gdse.instritutefirstsemfinal.util.AlertUtil;
         import lk.ijse.gdse.instritutefirstsemfinal.util.RegexUtil;
         import org.controlsfx.control.CheckComboBox;

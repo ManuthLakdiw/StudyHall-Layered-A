@@ -23,8 +23,6 @@ import lk.ijse.gdse.instritutefirstsemfinal.bo.BOFactory;
 import lk.ijse.gdse.instritutefirstsemfinal.bo.agreement.ResultBO;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.ResultDto;
 import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.ResultTm;
-import lk.ijse.gdse.instritutefirstsemfinal.dto.tm.StudentTm;
-import lk.ijse.gdse.instritutefirstsemfinal.model.ResultModel;
 
 import java.io.IOException;
 import java.net.URL;
