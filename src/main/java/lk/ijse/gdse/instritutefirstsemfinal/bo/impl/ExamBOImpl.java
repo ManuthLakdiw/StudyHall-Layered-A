@@ -111,7 +111,7 @@ public class ExamBOImpl implements ExamBO {
     @Override
     public ExamDto getNextUpComingExam() throws SQLException {
         ExamDto examDto = new ExamDto();
-        Exam examEntity = queryDAO.getNextUpComingExam();
+        Exam examEntity = queryDAO. getNextUpComingExam();
         System.out.println(queryDAO.getNextUpComingExam());
         examDto.setExamId(examEntity.getExamId());
         examDto.setSubject(examEntity.getSubject());

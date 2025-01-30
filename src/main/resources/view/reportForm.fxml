@@ -42,14 +42,6 @@
             </Button>
          </children>
       </HBox>
-      <HBox layoutX="37.0" layoutY="186.0" prefHeight="49.0" prefWidth="1024.0">
-         <children>
-            <Button fx:id="btnGenarateAllStudentReport1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#btnGenarateAllStudentReportOnAction" prefHeight="35.0" prefWidth="231.0" style="-fx-background-color: #4a3549; -fx-background-radius: 5px;" styleClass="button-admin" stylesheets="@../assets/style/Button.css" text="Results" textFill="WHITE">
-               <font>
-                  <Font name="Arial Bold" size="16.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
+      <HBox layoutX="37.0" layoutY="186.0" prefHeight="49.0" prefWidth="1024.0" />
    </children>
 </Pane>
